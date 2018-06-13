@@ -1,0 +1,26 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: linear-gradient(-135deg, #AD0000, #000000);
+  font-family: 'Poppins', sans-serif !important;
+}
+#locationsdiv {
+  background: #fff;
+  width: 90%;
+  height: 624px;
+  max-width: 450px;
+  border-radius: 25px;
+  box-shadow: 10px 1px 100px #111;
+}
+#locationsdiv img {
+  padding: 20px;
+  left: 0;
+}
