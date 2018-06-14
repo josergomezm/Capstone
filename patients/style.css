@@ -1,0 +1,93 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  background: linear-gradient(-135deg, #AD0000, #000000);
+  font-family: 'Poppins', sans-serif !important;
+}
+#patientsdiv {
+  background: #fff;
+  width: 95%;
+  height: 95%;
+  border-radius: 25px;
+  box-shadow: 10px 1px 100px #111;
+}
+#patientsdiv img {
+  padding: 0 20px 20px 20px;
+  left: 0;
+}
+#maincontent {
+	margin: 20px 0;
+	overflow-y: auto;
+	height: 90%;
+}
+#headers > div {
+	margin: 0 20px;
+	padding: 0 15px;
+}
+#patients {
+	border-radius: 25px;
+	padding: 5px 0;
+	overflow-y: auto;
+	height: 40vh;
+}
+#patients li {
+	list-style: none;
+	border-bottom: 1px solid #666;
+	margin: 0 20px;
+	padding: 15px;
+}
+#patients a {
+	color: #313131;
+	margin-bottom: 5px;
+}
+#patients a:hover {
+	color: #313131;
+	text-decoration: none;
+}
+/* ----------- SEARCH BAR ------------- */
+input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('https://png.icons8.com/metro/1600/search.png');
+    background-size: 25px 25px;
+    background-position: 20px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 60px;
+    -webkit-transition: box-shadow 0.4s ease;
+    transition: box-shadow 0.4s ease;
+}
+
+input[type=text]:focus {
+    box-shadow: 5px 1px 20px #000;
+    outline: none;
+}
+/* ----------- SCROLLBAR -------------- */
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}

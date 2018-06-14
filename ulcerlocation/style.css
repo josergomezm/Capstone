@@ -12,7 +12,7 @@ body {
   background: linear-gradient(-135deg, #AD0000, #000000);
   font-family: 'Poppins', sans-serif !important;
 }
-#locationsdiv {
+#ulcerlocationsdiv {
   background: #fff;
   width: 90%;
   height: 624px;
@@ -20,27 +20,27 @@ body {
   border-radius: 25px;
   box-shadow: 10px 1px 100px #111;
 }
-#locationsdiv img {
+#ulcerlocationsdiv img {
   padding: 20px;
   left: 0;
 }
-#locations {
+#ulcerlocations {
 	border-radius: 25px;
 	padding: 5px 0;
 	height: 400px;
 	overflow-y: auto; 
 }
-#locations li {
+#ulcerlocations li {
 	list-style: none;
 	border-bottom: 1px solid #666;
 	margin: 0 20px;
 	padding: 15px;
 }
-#locations a {
+#ulcerlocations a {
 	color: #313131;
 	margin-bottom: 5px;
 }
-#locations a:hover {
+#ulcerlocations a:hover {
 	color: #313131;
 	text-decoration: none;
 }
