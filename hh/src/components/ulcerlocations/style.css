@@ -1,0 +1,32 @@
+#ulcerlocationsdiv {
+  background: #fff;
+  width: 90%;
+  height: 624px;
+  max-width: 450px;
+  border-radius: 25px;
+  box-shadow: 10px 1px 100px #111;
+}
+#ulcerlocationsdiv img {
+  padding: 20px;
+  left: 0;
+}
+#ulcerlocations {
+	border-radius: 25px;
+	padding: 5px 0;
+	height: 400px;
+	overflow-y: auto; 
+}
+#ulcerlocations li {
+	list-style: none;
+	border-bottom: 1px solid #666;
+	margin: 0 20px;
+	padding: 15px;
+}
+#ulcerlocations a {
+	color: #313131;
+	margin-bottom: 5px;
+}
+#ulcerlocations a:hover {
+	color: #313131;
+	text-decoration: none;
+}
