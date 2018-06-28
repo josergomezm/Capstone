@@ -1,7 +1,7 @@
 <template id="ulcerlocations">
   <div id="ulcerlocationsdiv" class="container">
     
-    <img class="mb-4" src="@/asssets/speedlogo.png" alt="" width="200">
+    <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
 
     <div class="text-center">
       
@@ -50,7 +50,7 @@
             </li>
           </a>
         </ul>
-      <div>
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,7 @@
 <template id="app">
-  <ulcerlocations/>
+  <keep-alive>
+    <component v-bind:is="component"></component>
+  </keep-alive>
 </template>
 
 <script>
@@ -15,6 +17,11 @@ export default {
     locations,
     patients,
     ulcerlocations
+  },
+  data() {
+    return {
+      component: 'login'
+    }
   }
 }
 </script>
