@@ -18,12 +18,12 @@
           </div>
         </div>
 
-        <div class="checkbox mb-3"></div>
+        <!-- <div class="checkbox mb-3"></div>
         <label>
           <input type="checkbox" value="remember-me"> Remember me
-        </label>
+        </label> -->
 
-        <button v-on:click="component = 'locations'" class="btn btn-lg btn-primary btn-block" type="submit">LOGIN</button>
+        <button v-on:click="loginHH" class="btn btn-lg btn-primary btn-block" type="submit">LOGIN</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2018 - ∞</p>
       </form>
     </div>
@@ -31,7 +31,21 @@
 
 <script>
 export default {
-  name: 'login'
+  name: 'login',
+  data:function() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    loginHH:function() {
+      //Check if username&password matching is in DB
+      //If in DB: Check if admin or nurse - If not: display alert
+      //Depending if admin or nurse load/populate locations
+      //Go to locations.vue --> this.$emit('loginHH', 'locations');
+    }
+  }
 }
 </script>
 

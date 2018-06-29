@@ -1,6 +1,6 @@
 <template id="app">
   <keep-alive>
-    <component v-bind:is="component"></component>
+    <component v-bind:is="component" v-on:changeComp="goTo($event)"></component>
   </keep-alive>
 </template>
 
@@ -9,6 +9,7 @@ import login from './components/login/login.vue'
 import locations from './components/locations/locations.vue'
 import patients from './components/patients/patients.vue'
 import ulcerlocations from './components/ulcerlocations/ulcerlocations.vue'
+import newpatient from './components/newpatient/newpatient.vue'
 
 export default {
   name: 'app',
@@ -16,11 +17,17 @@ export default {
     login,
     locations,
     patients,
-    ulcerlocations
+    ulcerlocations,
+    newpatient
   },
   data() {
     return {
       component: 'login'
+    }
+  },
+  methods: {
+    goTo:function(nextComp){
+      this.component = nextComp;
     }
   }
 }
