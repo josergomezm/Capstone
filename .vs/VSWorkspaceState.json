@@ -1,0 +1,18 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\hh",
+    "\\hh\\public",
+    "\\hh\\src",
+    "\\hh\\src\\assets",
+    "\\hh\\src\\components",
+    "\\hh\\src\\components\\locations",
+    "\\hh\\src\\components\\login",
+    "\\hh\\src\\components\\newpatient",
+    "\\hh\\src\\components\\newpatient\\assets",
+    "\\hh\\src\\components\\patients",
+    "\\hh\\src\\components\\ulcerlocations"
+  ],
+  "SelectedNode": "\\hh\\src\\components\\ulcerlocations",
+  "PreviewInSolutionExplorer": false
+}

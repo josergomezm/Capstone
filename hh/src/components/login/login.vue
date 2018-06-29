@@ -30,6 +30,38 @@
 </template>
 
 <script>
+    function checkDB(username,password) {
+          // app.js
+          const mysql = require('mysql');
+
+          // First you need to create a connection to the db
+          debugger;
+          const con = mysql.createConnection({
+            host: 'localhost',
+            user: 'user',
+            password: 'password',
+          });
+          
+          con.connect((err) => {
+            if(err){
+              console.log('Error connecting to Db');
+              alert("Error connecting to db");
+              return;
+            }
+            console.log('Connection established');
+          });
+          con.query('SELECT * FROM employees', (err,rows) => {
+            if(err) throw err;
+
+            console.log('Data received from Db:\n');
+            console.log(rows);
+          });
+          con.end((err) => {
+            // The connection is terminated gracefully
+            // Ensures all previously enqueued queries are still
+            // before sending a COM_QUIT packet to the MySQL server.
+          });
+    }
 export default {
   name: 'login',
   data:function() {
@@ -44,6 +76,14 @@ export default {
       //If in DB: Check if admin or nurse - If not: display alert
       //Depending if admin or nurse load/populate locations
       //Go to locations.vue --> this.$emit('loginHH', 'locations');
+      var username = "username";
+      var password = "password";
+      if(checkDB(username,password)) {
+          alert("goes inside the if");            
+      } else {
+          //send alert (and clear the login and password field?)
+          alert("gets to the end");
+      }
     }
   }
 }
