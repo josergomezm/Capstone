@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      component: 'login'
+      component: 'newpatient'
     }
   },
   methods: {
