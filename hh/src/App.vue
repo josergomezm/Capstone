@@ -8,8 +8,8 @@
 import login from './components/login/login.vue'
 import locations from './components/locations/locations.vue'
 import patients from './components/patients/patients.vue'
-import ulcerlocations from './components/ulcerlocations/ulcerlocations.vue'
-import newpatient from './components/newpatient/newpatient.vue'
+import ulcersLocations from './components/ulcersLocations/ulcersLocations.vue'
+import newPatient from './components/newPatient/newPatient.vue'
 
 export default {
   name: 'app',
@@ -17,12 +17,12 @@ export default {
     login,
     locations,
     patients,
-    ulcerlocations,
-    newpatient
+    ulcersLocations,
+    newPatient
   },
   data() {
     return {
-      component: 'newpatient'
+      component: 'newPatient'
     }
   },
   methods: {
