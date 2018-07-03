@@ -1,0 +1,72 @@
+#statusdiv {
+    background: #fff;
+    width: 95%;
+    height: 95%;
+    border-radius: 25px;
+    box-shadow: 10px 1px 100px #111;
+}
+#statusdiv img {
+    padding: 0 20px 20px 20px;
+    left: 0;
+ }
+ #maincontent {
+    margin: 20px 0;
+    overflow-y: auto;
+    height: 90%;
+}
+#headers > div {
+    margin: 0 20px;
+    padding: 0 15px;
+}
+#status {
+    border-radius: 25px;
+    padding: 5px 0;
+    overflow-y: auto;
+    height: 40vh;
+}
+#status li {
+    list-style: none;
+    border-bottom: 1px solid #666;
+    margin: 0 20px;
+    padding: 15px;
+}
+#status a {
+    color: #313131;
+    margin-bottom: 5px;
+}
+#status a:hover {
+    color: #313131;
+    text-decoration: none;
+}
+#ulcerLocation {
+    width: 150px;
+    margin: auto;
+}
+.front{
+    background: url(./../newPatient/assets/BodyFront.png) center no-repeat;
+    background-size: 80%;
+    height: 300px;
+}
+.back{
+    background: url(./../newPatient/assets/BodyBack.png) center no-repeat;
+    background-size: 80%;
+    height: 300px;
+}
+.right{
+    background: url(./../newPatient/assets/BodyRight.png) center no-repeat;
+    height: 300px;
+    background-size: 40%;
+}
+.left{
+    background: url(./../newPatient/assets/BodyLeft.png) center no-repeat;
+    height: 300px;
+    background-size: 40%;
+}
+#ulcerPicture {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    padding: 20px !important;
+    background: #e8e8e8;
+    border-radius: 5px;
+}

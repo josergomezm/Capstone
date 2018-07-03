@@ -69,9 +69,6 @@
     width: 150px;
     margin: auto;
 }
-#bodyfig a{
-    position: relative;
-}
 .body-view div:hover {
     cursor: pointer;
 }
