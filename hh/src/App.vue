@@ -10,6 +10,7 @@ import locations from './components/locations/locations.vue'
 import patients from './components/patients/patients.vue'
 import ulcersLocations from './components/ulcersLocations/ulcersLocations.vue'
 import newPatient from './components/newPatient/newPatient.vue'
+import updatePatient from './components/updatePatient/updatePatient.vue'
 import status from './components/status/status.vue'
 
 export default {
@@ -20,11 +21,12 @@ export default {
     patients,
     ulcersLocations,
     newPatient,
+    updatePatient,
     status
   },
   data() {
     return {
-      component: 'status'
+      component: 'patients'
     }
   },
   methods: {

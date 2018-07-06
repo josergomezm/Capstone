@@ -36,7 +36,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -48,7 +48,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -60,7 +60,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -72,7 +72,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -84,7 +84,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -96,7 +96,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -108,7 +108,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -120,7 +120,7 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
           <li class="row">
@@ -132,12 +132,12 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-primary col">Update</button>
+            <button type="button" class="btn btn-danger col">Update</button>
           </li>
 
         </ul>
 
-        <button type="button" class="mt-4 btn btn-primary col">Add New Patient</button>
+        <button type="button" class="mt-4 btn btn-danger col">Add New Patient</button>
       </div>
     </div>
   </div>
