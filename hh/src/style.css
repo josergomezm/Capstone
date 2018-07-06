@@ -1,7 +1,7 @@
-html,
+/* html,
 body {
   height: 100%;
-}
+} */
 body {
   display: -ms-flexbox;
   display: flex;
@@ -9,7 +9,8 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background: linear-gradient(-135deg, #AD0000, #000000);
+  /* background: linear-gradient(-135deg, #AD0000, #000000); */
+  background: linear-gradient(-90deg, #AD0000, #000000);
   font-family: 'Poppins', sans-serif !important;
 }
 /* ----------- SCROLLBAR -------------- */

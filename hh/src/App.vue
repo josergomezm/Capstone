@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      component: 'patients'
+      component: 'updatePatient'
     }
   },
   methods: {

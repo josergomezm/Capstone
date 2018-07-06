@@ -4,26 +4,31 @@
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
       <form class="form-newpatient text-center">
 
-        <h1 class="h3 font-weight-bold">ADD NEW PATIENT</h1>
+        <h1 class="h3 font-weight-bold">UPDATE PATIENT</h1>
 
         <div id="inputsdiv">
 
             <!-- PATIENT NAME INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">perm_identity</i><label for="inputPatientName" class="sr-only">Patient Full Name</label>
-                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" required autofocus>
+                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" required readonly>
             </div>
 
             <!-- PATIENT ID INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">fingerprint</i><label for="inputPatientID" class="sr-only">Patient ID</label>
-                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required>
+                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required readonly>
+            </div>
+
+            <div class="row mb-2">
+                <button class="btn btn-danger col-sm-5 m-auto" type="button">New</button>
+                <button class="btn btn-danger col-sm-5 m-auto" type="button">Existing</button>
             </div>
 
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">straighten</i><label for="maxLength" class="sr-only">Max length of the ulcer (cm)</label>
-                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" required>
+                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" required autofocus>
             </div>
 
             <!-- UPLOAD IMAGE INPUT -->
@@ -167,7 +172,7 @@
             </div>
         </div>
         <!-- ADD PATIENT BUTTON -->
-        <button v-on:click="addPatient" class="btn btn-lg btn-danger btn-block" type="submit">Add Patient</button>
+        <button v-on:click="addPatient" class="btn btn-lg btn-danger btn-block" type="submit">Update Patient</button>
       </form>
     </div>
     </div>
@@ -178,8 +183,8 @@ export default {
     name: 'newpatient',
     data:function() {
         return {
-            patientName: '',
-            patientID: '',
+            patientName: 'John Doe',
+            patientID: '999NH',
             length: '',
             bodyView: '',
             location: '',
