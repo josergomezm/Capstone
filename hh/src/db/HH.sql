@@ -9,18 +9,28 @@ SET FOREIGN_KEY_CHECKS=1;
 CREATE DATABASE IF NOT EXISTS HopefullyHealing;
 SET @encryption_key = 'key:ssn';
 
+/*
+CREATE TABLE HopefullyHealing.Accounts (
+    `accountId` INT NOT NULL AUTO_INCREMENT,
+    `user` VARCHAR(250) NOT NULL,
+    `pass` BLOB NOT NULL,
+    `isAdmin` BOOLEAN NOT NULL,
+    `isNurse` BOOLEAN NOT NULL,
+    PRIMARY KEY (`accountId`)
+) ENGINE=INNODB;
+*/
 
 CREATE TABLE HopefullyHealing.Patients (
 	`patientId` INT NOT NULL AUTO_INCREMENT,
-    `firstName` VARCHAR(250) NOT NULL,
-    `lastName` VARCHAR(250) NOT NULL,
-    `address` VARCHAR(1000) DEFAULT NULL,
+    `fullName` VARCHAR(1000) NOT NULL,
+    `phoneNumber` VARCHAR(50) NOT NULL,
+    `streetAddress` VARCHAR(1000) DEFAULT NULL,
     `city` VARCHAR(250) DEFAULT NULL,
     `state` VARCHAR(2) DEFAULT NULL,
     `zip` VARCHAR(5) DEFAULT NULL,
     `SSN` BLOB,
     `insuranceType` ENUM('Medicare', 'Medicaid', 'Private') NOT NULL,
-    `insuranceName` VARCHAR(250) DEFAULT NULL,
+    `insuranceName` ENUM('Passport Health Group', 'Unitedhealth Group', 'Wellpoint Inc. Group', 'Kaiser Foundation Group', 'Humana Group', 'Aetna Group', 'HCSC Group', 'Cigna Health Group', 'Highmark Group') NOT NULL,
     PRIMARY KEY (`patientId`),
 	UNIQUE INDEX `patientId_UNIQUE` (`patientId` ASC)
 ) ENGINE=INNODB;
@@ -50,6 +60,14 @@ CREATE TABLE HopefullyHealing.Visits (
 ) ENGINE=INNODB;
 
 /* Part 3 */
+/*
+DELIMITER | 
+CREATE TRIGGER HopefullyHealing.account_trigger BEFORE INSERT ON HopefullyHealing.Accounts FOR EACH ROW
+BEGIN
+	SET new.pass := AES_ENCRYPT(new.pass, @encryption_key);
+END|
+DELIMITER ;
+*/
 
 DELIMITER | 
 CREATE TRIGGER HopefullyHealing.patient_trigger BEFORE INSERT ON HopefullyHealing.Patients FOR EACH ROW
