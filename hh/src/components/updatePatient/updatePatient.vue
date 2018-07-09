@@ -20,11 +20,6 @@
                 <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required readonly>
             </div>
 
-            <div class="row mb-2">
-                <button class="btn btn-danger col-sm-5 m-auto" type="button">New</button>
-                <button class="btn btn-danger col-sm-5 m-auto" type="button">Existing</button>
-            </div>
-
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">straighten</i><label for="maxLength" class="sr-only">Max length of the ulcer (cm)</label>
@@ -32,16 +27,23 @@
             </div>
 
             <!-- UPLOAD IMAGE INPUT -->
-            <h2 class="h5 mt-2 font-weight-bold">Upload Picture</h2>
+            <!-- <h2 class="h5 mt-2 font-weight-bold">Upload Picture</h2> -->
 
             <div class="row inputs">
                 <i class="material-icons col-1">photo_camera</i><label for="ulcarImage" class="sr-only">Upload Picture</label>
                 <input type="file" name="ulcerImage" class="form-control col offset-1" accept="image/*" required>
             </div>
 
+            <h2 class="h5 mt-3 font-weight-bold">Where is the ulcer located?</h2>
+
+            <!-- NEW/EXISTING BUTTONS -->
+            <div class="row mb-2 justify-content-center">
+                <button class="btn btn-danger col-sm-5 loc-btn" type="button" v-on:click="showing = 'newUlcer', location = ''">New</button>
+                <button class="btn btn-danger col-sm-5 loc-btn" type="button" v-on:click="showing = 'oldUlcer', location = ''">Existing</button>
+            </div>
+
             <!-- ULCERLOCATION PICKER -->
-            <div id="ulcerlocationdiv">
-                <h2 class="h5 mt-3 font-weight-bold">Where is the ulcer located?</h2>
+            <div id="ulcerlocationdivA" v-if="showing === 'newUlcer'">                
                 <div class="row body-view">
                     <div class="col-3" v-on:click="bodyView = 'front'">FRONT</div>
                     <div class="col-3" v-on:click="bodyView = 'back'">BACK</div>
@@ -164,7 +166,35 @@
                         </div>                     
                     </div>
                 </div>
+
+                <!-- ULCER LOCATION INPUT -->
+                <div v-if="location.length > 0" class="row inputs">
+                    <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
+                    <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
+                </div>
+                
             </div>
+            
+        </div>
+        <div id="ulcerlocationdivA" v-if="showing === 'oldUlcer'">
+            <ul id="ulcerlocations" class="text-center">
+                <a v-on:click="location = 'Left Foot (Side)'">
+                    <li>
+                    Left Foot (Side)
+                    </li>
+                </a>
+                <a v-on:click="location = 'Head (Right Side)'">
+                    <li>
+                    Head (Right Side)
+                    </li>
+                </a>
+                <a v-on:click="location = 'Lower Back'">
+                    <li>
+                    Lower Back
+                    </li>
+                </a>
+            </ul>
+
             <!-- ULCER LOCATION INPUT -->
             <div v-if="location.length > 0" class="row inputs">
                 <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
@@ -172,7 +202,7 @@
             </div>
         </div>
         <!-- ADD PATIENT BUTTON -->
-        <button v-on:click="addPatient" class="btn btn-lg btn-danger btn-block" type="submit">Update Patient</button>
+        <button v-on:click="updatePatient" class="btn btn-lg btn-danger btn-block" type="submit">Update Patient</button>
       </form>
     </div>
     </div>
@@ -189,20 +219,17 @@ export default {
             bodyView: '',
             location: '',
             image: '',
-            date: ''
+            date: '',
+            showing: '',
+            locations: ''
         }
     },
     methods: {
-        locateUlcer:function(){
-            // Write funcion to figure out where the ulcer is depending on which div the user clicked.
-            // I was thinking in using the nested inner classes of #bodyfig (bodyView, bodyPart, and any other we could assign to make it easier)
-            // store value in var location
-            // ************* If we dont have time for this we can you create a dropdown with a search bar (might be easier). *****************
-        },
-        addPatient:function(){
-            // Trigered when "Add Patient" clicked
+        updatePatient:function(){
             // Post info in the db
-            // Go to - imgupload.vue
+            // Then:
+            alert("Patient " + this.patientName + " has been updated!");
+            this.$emit('changeComp', 'patients');
         }
     }
 }

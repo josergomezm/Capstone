@@ -43,7 +43,8 @@ export default {
       //Check if username&password matching is in DB
       //If in DB: Check if admin or nurse - If not: display alert
       //Depending if admin or nurse load/populate locations
-      //Go to locations.vue --> this.$emit('loginHH', 'locations');
+      //Go to locations.vue --> 
+      this.$emit('changeComp', 'locations');
     }
   }
 }

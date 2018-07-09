@@ -1,3 +1,6 @@
+a:hover{
+    cursor: pointer;
+}
 #newpatientdiv {
     background: #fff;
     width: 90%;
@@ -65,6 +68,9 @@
     margin-bottom: 4px;
     border: none;
 }
+.loc-btn{
+    margin: 1%;
+}
 #bodyfig {
     width: 150px;
     margin: auto;
@@ -106,4 +112,24 @@
     max-width: 43px !important;
     /* box-shadow: 0 0 60px 6px #AD0000; */
     border: inset 2px #AD0000;
+}
+#ulcerlocations {
+	border-radius: 25px;
+	padding: 5px 0;
+	height: 400px;
+	overflow-y: auto; 
+}
+#ulcerlocations li {
+	list-style: none;
+	border-bottom: 1px solid #666;
+	margin: 0 20px;
+	padding: 15px;
+}
+#ulcerlocations a {
+	color: #313131;
+	margin-bottom: 5px;
+}
+#ulcerlocations a:hover {
+	color: #AD0000;
+	text-decoration: none;
 }

@@ -9,44 +9,19 @@
 
       <div class="container">
         <ul id="locations" class="text-center">
-          <a href="">
+          <a v-on:click="goToPatients">
             <li>
               Location 1
             </li>
           </a>
-          <a href="">
+          <a v-on:click="goToPatients">
             <li>
               Location 2
             </li>
           </a>
-          <a href="">
+          <a v-on:click="goToPatients">
             <li>
               Location 3
-            </li>
-          </a>
-          <a href="">
-            <li>
-              Location 4
-            </li>
-          </a>
-          <a href="">
-            <li>
-              Location 5
-            </li>
-          </a>
-          <a href="">
-            <li>
-              Location 6
-            </li>
-          </a>
-          <a href="">
-            <li>
-              Location 7
-            </li>
-          </a>
-          <a href="">
-            <li>
-              Location 8
             </li>
           </a>
         </ul>          
@@ -57,7 +32,16 @@
 
 <script>
 export default {
-  name: 'locations'
+  name: 'locations',
+  methods: {
+    goToPatients:function() {
+      //Check if username&password matching is in DB
+      //If in DB: Check if admin or nurse - If not: display alert
+      //Depending if admin or nurse load/populate locations
+      //Go to locations.vue --> 
+      this.$emit('changeComp', 'patients');
+    }
+  }
 }
 </script>
 

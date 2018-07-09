@@ -195,9 +195,10 @@ export default {
             // ************* If we dont have time for this we can you create a dropdown with a search bar (might be easier). *****************
         },
         addPatient:function(){
-            // Trigered when "Add Patient" clicked
-            // Post info in the db
-            // Go to - imgupload.vue
+            //Do stuff
+            //Then
+            alert("Patient " + this.patientName + " has been added!");
+            this.$emit('changeComp', 'patients');
         }
     }
 }

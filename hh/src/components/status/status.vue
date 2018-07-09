@@ -165,6 +165,13 @@
         <!-- GRAPH -->
         <canvas class="mt-4" id="ulcerChart"></canvas>
 
+        <!-- UPDATE AND BACK TO PATEINTS BUTTONS -->
+        <!-- NEW/EXISTING BUTTONS -->
+        <div class="row mb-2 justify-content-center">
+            <button class="btn btn-danger col-sm-5 opt-btn" type="button" v-on:click="updatePatient">Update</button>
+            <button class="btn btn-danger col-sm-5 opt-btn" type="button" v-on:click="backToPatients">Patients List</button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -201,7 +208,16 @@ export default {
     }
   },
   methods: {
-    
+    updatePatient:function(){
+        // Do something
+        //Then:
+        this.$emit('changeComp', 'updatePatient');
+    },
+    backToPatients:function(){
+        // Do something
+        //Then:
+        this.$emit('changeComp', 'patients');
+    }
   },
   created() {
     //Populate all the variables!

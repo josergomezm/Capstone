@@ -27,8 +27,9 @@
         </div> 
 
         <ul id="patients">
+
           <li class="row">
-            <a href="" class="col-12 col-sm-10">
+            <a v-on:click="patientStatus" class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">John Doe</div>
                 <div class="col-3 d-none d-sm-block">1/1/2018</div>
@@ -36,11 +37,11 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-danger col">Update</button>
+            <button type="button" class="btn btn-danger col" v-on:click="updatePatient">Update</button>
           </li>
 
           <li class="row">
-            <a href="" class="col-12 col-sm-10">
+            <a v-on:click="patientStatus" class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">John Doe</div>
                 <div class="col-3 d-none d-sm-block">1/1/2018</div>
@@ -48,11 +49,11 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-danger col">Update</button>
+            <button type="button" class="btn btn-danger col" v-on:click="updatePatient">Update</button>
           </li>
 
           <li class="row">
-            <a href="" class="col-12 col-sm-10">
+            <a v-on:click="patientStatus" class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">John Doe</div>
                 <div class="col-3 d-none d-sm-block">1/1/2018</div>
@@ -60,84 +61,13 @@
                 <div class="col-2 d-none d-sm-block">1</div>
               </div>
             </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
-          </li>
-
-          <li class="row">
-            <a href="" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-danger col">Update</button>
+            <button type="button" class="btn btn-danger col" v-on:click="updatePatient">Update</button>
           </li>
 
         </ul>
 
-        <button type="button" class="mt-4 btn btn-danger col">Add New Patient</button>
+        <button type="button" class="mt-4 btn btn-danger col" v-on:click="backToLocations">Locations</button>
+        <button type="button" class="mt-4 btn btn-danger col" v-on:click="addPatient">Add New Patient</button>
       </div>
     </div>
   </div>
@@ -145,7 +75,29 @@
 
 <script>
   export default {
-    name: 'locations'
+    name: 'locations',
+    methods: {
+    patientStatus:function(){
+      //Do something
+      //Then take me to the next component
+      this.$emit('changeComp', 'status');
+    },
+    updatePatient:function() {
+      //Do something
+      //Then take me to the next component
+      this.$emit('changeComp', 'updatePatient');
+    },
+    addPatient:function() {
+      //Do something
+      //Then take me to the next component
+      this.$emit('changeComp', 'newPatient');
+    },
+    backToLocations(){
+      //Do something
+      //Then take me to the next component
+      this.$emit('changeComp', 'locations');
+    }
+  }
   }
 </script>
     
