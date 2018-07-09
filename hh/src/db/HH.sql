@@ -30,7 +30,7 @@ CREATE TABLE HopefullyHealing.Patients (
     `zip` VARCHAR(5) DEFAULT NULL,
     `SSN` BLOB,
     `insuranceType` ENUM('Medicare', 'Medicaid', 'Private') NOT NULL,
-    `insuranceName` ENUM('Passport Health Group', 'Unitedhealth Group', 'Wellpoint Inc. Group', 'Kaiser Foundation Group', 'Humana Group', 'Aetna Group', 'HCSC Group', 'Cigna Health Group', 'Highmark Group') NOT NULL,
+    `insuranceName` ENUM('Passport Health Group', 'Unitedhealth Group', 'Wellpoint Inc. Group', 'Kaiser Foundation Group', 'Humana Group', 'Aetna Group', 'HCSC Group', 'Cigna Health Group', 'Highmark Group'),
     PRIMARY KEY (`patientId`),
 	UNIQUE INDEX `patientId_UNIQUE` (`patientId` ASC)
 ) ENGINE=INNODB;
