@@ -219,7 +219,7 @@ export default {
         this.$emit('changeComp', 'patients');
     }
   },
-  created() {
+  created(){
     //Populate all the variables!
   },
   mounted() {

@@ -188,12 +188,6 @@ export default {
         }
     },
     methods: {
-        locateUlcer:function(){
-            // Write funcion to figure out where the ulcer is depending on which div the user clicked.
-            // I was thinking in using the nested inner classes of #bodyfig (bodyView, bodyPart, and any other we could assign to make it easier)
-            // store value in var location
-            // ************* If we dont have time for this we can you create a dropdown with a search bar (might be easier). *****************
-        },
         addPatient:function(){
             //Do stuff
             //Then
