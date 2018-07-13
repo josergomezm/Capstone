@@ -46,7 +46,7 @@ app.get('/python', (req, res) => {
 })
  
 app.get('/data', (req,res) => {
-    connection.query(`SELECT * FROM Patients AS p INNER JOIN Wounds AS w ON p.patientId = w.patientId WHERE LOWER(p.firstName) = LOWER('${req.query.fname}')`, function (error, results, fields) {
+    connection.query(`SELECT * FROM Patients AS p INNER JOIN Wounds AS w ON p.patientId = w.patientId WHERE LOWER(p.fullName) LIKE LOWER('%${req.query.fname}%')`, function (error, results, fields) {
       res.send(results)
     });
 })

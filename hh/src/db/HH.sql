@@ -1,110 +1,85 @@
-/* Part 1 */
+/*
+*   This SQL Script will create a HopefullyHealing Database, Tables within this Database and their structure.
+*/
+
 SET FOREIGN_KEY_CHECKS=0; 
-DROP TABLE IF EXISTS HopefullyHealing.Patients;
-DROP TABLE IF EXISTS HopefullyHealing.Wounds;
-DROP DATABASE IF EXISTS HopefullyHealing;
+    DROP TABLE IF EXISTS HopefullyHealing.Patients;
+    DROP TABLE IF EXISTS HopefullyHealing.Wounds;
+    DROP TABLE IF EXISTS HopefullyHealing.Visits;
+    DROP DATABASE IF EXISTS HopefullyHealing;
 SET FOREIGN_KEY_CHECKS=1;
 
-/* Part 2 */
 CREATE DATABASE IF NOT EXISTS HopefullyHealing;
 SET @encryption_key = 'key:ssn';
 
 /*
-CREATE TABLE HopefullyHealing.Accounts (
-    `accountId` INT NOT NULL AUTO_INCREMENT,
-    `user` VARCHAR(250) NOT NULL,
-    `pass` BLOB NOT NULL,
-    `isAdmin` BOOLEAN NOT NULL,
-    `isNurse` BOOLEAN NOT NULL,
-    PRIMARY KEY (`accountId`)
-) ENGINE=INNODB;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
+-- 
+--  TABLE STRUCTURE FOR: Patients
+-- 
 CREATE TABLE HopefullyHealing.Patients (
-	`patientId` INT NOT NULL AUTO_INCREMENT,
-    `fullName` VARCHAR(1000) NOT NULL,
-    `phoneNumber` VARCHAR(50) NOT NULL,
-    `streetAddress` VARCHAR(1000) DEFAULT NULL,
-    `city` VARCHAR(250) DEFAULT NULL,
-    `state` VARCHAR(2) DEFAULT NULL,
-    `zip` VARCHAR(5) DEFAULT NULL,
-    `SSN` BLOB,
-    `insuranceType` ENUM('Medicare', 'Medicaid', 'Private') NOT NULL,
-    `insuranceName` ENUM('Passport Health Group', 'Unitedhealth Group', 'Wellpoint Inc. Group', 'Kaiser Foundation Group', 'Humana Group', 'Aetna Group', 'HCSC Group', 'Cigna Health Group', 'Highmark Group'),
-    PRIMARY KEY (`patientId`),
-	UNIQUE INDEX `patientId_UNIQUE` (`patientId` ASC)
-) ENGINE=INNODB;
+  `patientId` INT(11) NOT NULL AUTO_INCREMENT,
+  `fullName` VARCHAR(1000) COLLATE UTF8_UNICODE_CI NOT NULL,
+  `phoneNumber` VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
+  `streetAddress` VARCHAR(1000) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `city` VARCHAR(250) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `state` VARCHAR(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `zip` VARCHAR(5) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `SSN` BLOB DEFAULT NULL,
+  `insuranceType` ENUM('Medicare','Medicaid','Private') COLLATE UTF8_UNICODE_CI NOT NULL,
+  `insuranceName` ENUM('Passport Health Group','Unitedhealth Group','Wellpoint Inc. Group','Kaiser Foundation Group','Humana Group','Aetna Group','HCSC Group','Cigna Health Group','Highmark Group') COLLATE UTF8_UNICODE_CI,
+  PRIMARY KEY (`patientId`),
+  UNIQUE KEY `patientId_UNIQUE` (`patientId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
-
+-- 
+-- TABLE STRUCTURE FOR: Wounds
+-- 
 CREATE TABLE HopefullyHealing.Wounds (
-	`woundId` INT NOT NULL AUTO_INCREMENT,
-    `patientId` INT NOT NULL,
-    `imagePath` VARCHAR(2000),
-    `woundSize_cm` FLOAT NOT NULL,
-    `woundLocation` ENUM('FRONT', 'BACK', 'RIGHT', 'LEFT') NOT NULL,
-    `tissueType` ENUM('NECROTIC', 'GRANULATION', 'SLOUGH', 'EPITHELIZING') NOT NULL,
-    PRIMARY KEY (`woundId`),
-    UNIQUE INDEX `woundId_UNIQUE` (`woundId` ASC)
-) ENGINE=INNODB;
+  `woundId` int(11) NOT NULL AUTO_INCREMENT,
+  `patientId` int(11) NOT NULL,
+  `imagePath` VARCHAR(2000) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `woundSize_cm` float NOT NULL,
+  `woundView` ENUM('FRONT','BACK','RIGHT','LEFT') COLLATE UTF8_UNICODE_CI NOT NULL,
+  `woundLocation` ENUM('Head (Front)', 'Right Shoulder (Front)', 'Chest', 'Left Shoulder (Front)', 'Right Arm (Front)', 'Abdomen', 'Left Arm (Front)', 'Right Hand (Front)', 'Pelvis (Front)', 'Left Hand (Front)', 'Right Leg (Front)', 'Left Leg (Front)', 'Right Crus', 'Left Crus', 'Right Foot (Front)', 'Left Foot (Front)', 'Head (Back)', 'Left Shoulder (Back)', 'Back', 'Right Shoulder (Back)', 'Left Arm (Back)', 'Lower Back', 'Right Arm (Back)', 'Left Hand (Back)', 'Gluteus', 'Right Hand (Back)', 'Left Leg (Back)', 'Right Leg (Back)', 'Left Calf', 'Right Calg', 'Left Foot (Back)', 'Right Foot (Back)', 'Head (Right Side)', 'Right Shoulder (Side)', 'Right Arm (Side)', 'Pelvis (Right Side)', 'Right Leg (Side)', 'Right Fibula (Side)', 'Right Foot (Side)', 'Head (Left Side)', 'Left Shoulder (Side)', 'Left Arm (Side)', 'Pelvis (Left Side)', 'Left Leg (Side)', 'Left Fibula (Side)', 'Left Foot (Side)') COLLATE UTF8_UNICODE_CI NOT NULL,
+-- Need to know what is Tissue A, B, C, D.
+  `tissueA` float COLLATE UTF8_UNICODE_CI NOT NULL,
+  `tissueB` float COLLATE UTF8_UNICODE_CI NOT NULL,
+  `tissueC` float COLLATE UTF8_UNICODE_CI NOT NULL,
+  `tissueD` float COLLATE UTF8_UNICODE_CI NOT NULL,
+  PRIMARY KEY (`woundId`),
+  FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
+  UNIQUE KEY `woundId_UNIQUE` (`woundId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=UTF8_UNICODE_CI;
 
 
+-- 
+--  TABLE STRUCTURE FOR: Visits
+-- 
 CREATE TABLE HopefullyHealing.Visits (
-	`visitId` INT NOT NULL AUTO_INCREMENT,
-    `patientId` INT NOT NULL,
-    `woundId` INT NOT NULL,
-    `visitDate` DATETIME NOT NULL DEFAULT NOW(),
-	`seenBy` VARCHAR(250) NOT NULL,
-    `physcianNotes` LONGTEXT DEFAULT NULL,
-    PRIMARY KEY (`visitId`),
-    UNIQUE INDEX `visitId_UNIQUE` (`visitId` ASC)
-) ENGINE=INNODB;
+  `visitId` int(11) NOT NULL AUTO_INCREMENT,
+  `patientId` int(11) NOT NULL,
+  `woundId` int(11) NOT NULL,
+  `visitDate` DATETIME NOT NULL DEFAULT current_timestamp(),
+  `seenBy` VARCHAR(250) COLLATE UTF8_UNICODE_CI NOT NULL,
+  `physcianNotes` longtext COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  PRIMARY KEY (`visitId`),
+  FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
+  FOREIGN KEY (`woundId`) REFERENCES HopefullyHealing.Wounds (`woundId`),
+  UNIQUE KEY `visitId_UNIQUE` (`visitId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
-/* Part 3 */
 /*
-DELIMITER | 
-CREATE TRIGGER HopefullyHealing.account_trigger BEFORE INSERT ON HopefullyHealing.Accounts FOR EACH ROW
-BEGIN
-	SET new.pass := AES_ENCRYPT(new.pass, @encryption_key);
-END|
-DELIMITER ;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-
 DELIMITER | 
 CREATE TRIGGER HopefullyHealing.patient_trigger BEFORE INSERT ON HopefullyHealing.Patients FOR EACH ROW
 BEGIN
 	SET new.SSN := AES_ENCRYPT(new.SSN, @encryption_key);
 END|
 DELIMITER ;
-
-/* Part 4 */
-/* Patient Table */
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"John","Doe", "3024 Vogue Ave", "Louisville", "KY", "40220", "111-11-1111", "Medicaid", "Medicaid");
-
-SELECT patientId, SSN, CAST(AES_DECRYPT(SSN,@encryption_key) AS CHAR(1000)) AS DECRYPTED_SSN FROM HopefullyHealing.Patients;
-
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Jane","Doe");
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Samantha","Marks");
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Terry","Marcus");
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Dexter","Brown");
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Martin","Stewart");
-INSERT INTO HopefullyHealing.Patients VALUES (NULL,"Mary","Martha");
-
-
-/* Wounds Table */
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,2,'image_path/sloughTissue-09-23-2018.jpg',8.7,'FRONT');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,2,'image_path/sloughTissue-09-25-2018.jpg',5.5,'FRONT');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,5,'image_path/sloughTissue-09-21-2018.jpg',1.3,'LEFT');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,1,'image_path/sloughTissue-09-20-2018.jpg',4.02,'BACK');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,3,'image_path/sloughTissue-09-13-2018.jpg',6.9,'LEFT');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,1,'image_path/sloughTissue-09-09-2018.jpg',8.58,'BACK');
-INSERT INTO HopefullyHealing.Wounds VALUES (NULL,1,'image_path/sloughTissue-09-09-2018.jpg',8.58,'BACK');
-
-/* Part 4 */
-USE HopefullyHealing;
-
-SELECT *
-FROM Patients AS p
-INNER JOIN Wounds AS w
-ON p.patientId = w.patientId
-WHERE LOWER(p.firstName) = LOWER('John');
-
+/*
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
