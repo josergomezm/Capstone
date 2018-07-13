@@ -80,22 +80,26 @@
     patientStatus:function(){
       //Do something
       //Then take me to the next component
-      this.$emit('changeComp', 'status');
+      // this.$emit('changeComp', 'status');
+      this.$router.push('/status')
     },
     updatePatient:function() {
       //Do something
       //Then take me to the next component
-      this.$emit('changeComp', 'updatePatient');
+      // this.$emit('changeComp', 'updatePatient');
+      this.$router.push('/updatePatient')
     },
     addPatient:function() {
       //Do something
       //Then take me to the next component
-      this.$emit('changeComp', 'newPatient');
+      // this.$emit('changeComp', 'newPatient');
+      this.$router.push('/newPatient')
     },
     backToLocations(){
       //Do something
       //Then take me to the next component
-      this.$emit('changeComp', 'locations');
+      // this.$emit('changeComp', 'locations');
+      this.$router.push('/locations')
     }
   }
   }

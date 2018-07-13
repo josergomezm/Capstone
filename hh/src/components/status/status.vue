@@ -211,12 +211,14 @@ export default {
     updatePatient:function(){
         // Do something
         //Then:
-        this.$emit('changeComp', 'updatePatient');
+        // this.$emit('changeComp', 'updatePatient');
+        this.$router.push('/updatePatient')
     },
     backToPatients:function(){
         // Do something
         //Then:
-        this.$emit('changeComp', 'patients');
+        // this.$emit('changeComp', 'patients');
+        this.$router.push('/patients')
     }
   },
   created(){

@@ -23,13 +23,14 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label> -->
 
-        <button v-on:click="auth.login()" class="btn btn-lg btn-danger btn-block" type="submit">LOGIN</button>
+        <button v-on:click="loginHH" class="btn btn-lg btn-danger btn-block" type="submit">LOGIN</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2018 - ∞</p>
       </form>
     </div>
 </template>
 
 <script>
+import AuthService from '../../auth/AuthService'
 export default {
   name: 'loginPage',
   props: ['auth'],
@@ -41,13 +42,20 @@ export default {
   },
   methods: {
     loginHH:function() {
+      const auth = new AuthService()
+      const { login, logout, authenticated, authNotifier } = auth
+
+      console.log(auth)
+      // console.log(auth.login)
+      auth.login()
       //Email: fake@fake.fake - Password: Fake123456
       
       //Check if username&password matching is in DB
       //If in DB: Check if admin or nurse - If not: display alert
       //Depending if admin or nurse load/populate locations
       //Go to locations.vue --> 
-      this.$emit('changeComp', 'locations');
+      // this.$emit('changeComp', 'locations');
+      // this.$router.push('/locations')
     }
   }
 }

@@ -229,7 +229,8 @@ export default {
             // Post info in the db
             // Then:
             alert("Patient " + this.patientName + " has been updated!");
-            this.$emit('changeComp', 'patients');
+            // this.$emit('changeComp', 'patients');
+            this.$router.push('/patients')
         }
     }
 }

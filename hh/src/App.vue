@@ -27,8 +27,13 @@ export default {
     status
   },
   data() {
+    
+    authNotifier.on('authChange', authState => {
+      this.authenticated = authState.authenticated
+    })
     return {
       auth,
+      authenticated,
       component: 'loginPage',
       user: '',
       patient: ''
@@ -36,6 +41,7 @@ export default {
   },
   methods: {
     login,
+    logout,
     goTo:function(nextComp){
       this.component = nextComp;
     }

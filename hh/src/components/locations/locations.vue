@@ -39,7 +39,8 @@ export default {
       //If in DB: Check if admin or nurse - If not: display alert
       //Depending if admin or nurse load/populate locations
       //Go to locations.vue --> 
-      this.$emit('changeComp', 'patients');
+      // this.$emit('changeComp', 'patients');
+      this.$router.push('/patients')
     }
   }
 }

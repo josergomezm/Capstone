@@ -192,7 +192,8 @@ export default {
             //Do stuff
             //Then
             alert("Patient " + this.patientName + " has been added!");
-            this.$emit('changeComp', 'patients');
+            // this.$emit('changeComp', 'patients');
+            this.$router.push('/patients')
         }
     }
 }

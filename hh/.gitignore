@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw*
 
 # API Keys
-/src/auth
+/src/auth/auth0-variables.js
