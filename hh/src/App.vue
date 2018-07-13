@@ -1,11 +1,15 @@
 <template id="app">
   <keep-alive>
-    <component v-bind:is="component" v-on:changeComp="goTo($event)"></component>
+    <router-view></router-view>
   </keep-alive>
 </template>
 
 <script>
-import login from './components/login/login.vue'
+import AuthService from './auth/AuthService'
+const auth = new AuthService()
+const { login, logout, authenticated, authNotifier } = auth
+
+import loginPage from './components/loginPage/loginPage.vue'
 import locations from './components/locations/locations.vue'
 import patients from './components/patients/patients.vue'
 import newPatient from './components/newPatient/newPatient.vue'
@@ -15,7 +19,7 @@ import status from './components/status/status.vue'
 export default {
   name: 'app',
   components: {
-    login,
+    loginPage,
     locations,
     patients,
     newPatient,
@@ -24,12 +28,14 @@ export default {
   },
   data() {
     return {
-      component: 'login',
+      auth,
+      component: 'loginPage',
       user: '',
       patient: ''
     }
   },
   methods: {
+    login,
     goTo:function(nextComp){
       this.component = nextComp;
     }
