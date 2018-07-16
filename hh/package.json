@@ -9,14 +9,14 @@
   },
   "dependencies": {
     "EventEmitter": "^1.0.0",
-    "auth0-js": "^9.6.1",
+    "auth0-js": "^9.7.2",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
-    "@vue/cli-service": "^3.0.0-beta.15",
+    "@vue/cli-plugin-babel": "^3.0.0-rc.5",
+    "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
+    "@vue/cli-service": "^3.0.0-rc.5",
     "vue-template-compiler": "^2.5.16"
   },
   "eslintConfig": {
