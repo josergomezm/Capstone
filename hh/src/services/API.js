@@ -6,7 +6,7 @@ const instance = axios.create({
   });
 
 
-instance.get('/python', {
+instance.get('/', {
 }).then((res)=>{
     console.log(res.data)
 }).catch((err)=>{

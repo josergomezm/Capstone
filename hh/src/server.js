@@ -53,14 +53,21 @@ app.get('/data', (req,res) => {
 
 app.post('/data', (req, res) =>{
     var patId = req.body.patId;
-    var fname = req.body.fname || 'NULL';
-    var lname = req.body.lname || 'NULL';
+    var patName = req.body.patName || 'NULL';
+    var patPhone = req.body.patPhone || 'NULL';
+    var patAddress = req.body.patAddress || 'NULL';
+    var patCity = req.body.patCity || 'NULL';
+    var patState = req.body.patState || 'NULL';
+    var patZip = req.body.patZip || 'NULL';
+    var patSSN = req.body.patSSN || 'NULL';
+    var patIType = req.body.patIType || 'NULL';
+    var patIName = req.body.patIName || 'NULL';
     var imagePath = req.body.imagePath || 'NULL';
     var woundSize = req.body.woundSize || 0.0;
     var woundLocation = req.body.woundLocation || 'FRONT';
 
-    WoundQueryString=`INSERT INTO HopefullyHealing.Wounds VALUES (NULL,${patId},'${imagePath}',${woundSize},'${woundLocation}');`
-    PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${fname}','${lname}');`
+    PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}');`
+    // WoundQueryString=`INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation) VALUES (NULL,${patId},'${imagePath}',${woundSize},'${woundView}','${woundLocation}');`
     
     
 
@@ -71,14 +78,15 @@ app.post('/data', (req, res) =>{
             res.end()
 
         }else{
-            connection.query(WoundQueryString, function (error, results, fields) {
-                if(error){
-                    res.write(JSON.stringify(error))
-                    res.end()
-                }
-                console.log(results)
-                res.send('patient has been added into the database!')
-            });        
+            res.send('patient has been added into the database!')
+            // connection.query(WoundQueryString, function (error, results, fields) {
+            //     if(error){
+            //         res.write(JSON.stringify(error))
+            //         res.end()
+            //     }
+            //     console.log(results)
+            //     res.send('patient has been added into the database!')
+            // });        
         }
     });
 })

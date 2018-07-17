@@ -8,17 +8,73 @@
 
         <div id="inputsdiv">
 
-            <!-- PATIENT NAME INPUT -->
-            <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientName" class="sr-only">Patient Full Name</label>
-                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" required autofocus>
-            </div>
-
             <!-- PATIENT ID INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">fingerprint</i><label for="inputPatientID" class="sr-only">Patient ID</label>
-                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required>
+                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required autofocus>
             </div>
+
+            <!-- PATIENT NAME INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientName" class="sr-only">Patient Full Name</label>
+                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" required>
+            </div>
+
+            <!-- PATIENT PHONE# INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientPhone" class="sr-only">Patient Phone</label>
+                <input v-model="patientPhone" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" required>
+            </div>
+
+            <!-- PATIENT Address INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientAddress" class="sr-only">Patient Address</label>
+                <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" required>
+            </div>
+
+            <!-- PATIENT City INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientCity" class="sr-only">Patient City</label>
+                <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" placeholder="Patient City" required>
+            </div>
+
+            <!-- PATIENT State INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientState" class="sr-only">Patient State</label>
+                <input v-model="patientState" id="inputPatientState" class="form-control col offset-1" placeholder="Patient State" required>
+            </div>
+
+            <!-- PATIENT Zip INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">perm_identity</i><label for="inputPatientZip" class="sr-only">Patient Zip</label>
+                <input v-model="patientZip" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" required>
+            </div>
+
+            <!-- PATIENT SSN INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">fingerprint</i><label for="inputPatientSSN" class="sr-only">Patient SSN</label>
+                <input v-model="patientSSN" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" required>
+            </div>
+
+            <!-- PATIENT InsuranceType INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">fingerprint</i><label for="inputPatientInsuranceType" class="sr-only">Patient InsuranceType</label>
+                <select class="form-control col offset-1" name="inputPatientInsuranceType">
+                    <option value="Medicare">Medicare</option>
+                    <option value="Medicaid">Medicaid</option>
+                    <option value="Private">Private</option>
+                </select>
+            </div>
+            
+            <!-- PATIENT InsuranceName INPUT -->
+            <div class="row inputs">
+                <i class="material-icons col-1">fingerprint</i><label for="inputPatientInsuranceName" class="sr-only">Patient InsuranceName</label>
+                <select class="form-control col offset-1" name="inputPatientInsuranceName">
+                    <option value="Medicare">Medicare</option>
+                    <option value="Medicaid">Medicaid</option>
+                    <option value="Private">Private</option>
+                </select>
+            </div>                   
 
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
@@ -174,26 +230,54 @@
 </template>
 
 <script>
+import instance from '../../services/RESTful'
+
 export default {
     name: 'newpatient',
     data:function() {
         return {
-            patientName: '',
-            patientID: '',
-            length: '',
-            bodyView: '',
-            location: '',
-            image: '',
-            date: ''
+            length: '15',
+            bodyView: 'BACK',
+            location: 'Lower Back',
+            image: 'tmp-testimage.jpg',
+            date: '7/12/2018',
+            patientID: '111',
+            patientName: 'Taylor Marks',
+            patientPhone: '123123',
+            patientAddress: 'Some adress',
+            patientCity: 'Some City',
+            patientState: 'KY',
+            patientZip: '12312',
+            patientSSN: '132-12-1232',
+            inputPatientInsuranceType: 'Medicare',
+            inputPatientInsuranceName: 'Passport Health Group'
         }
     },
     methods: {
         addPatient:function(){
             //Do stuff
             //Then
+            console.log(this.patientName);
+            instance.post('/data', {
+                patId: this.patientID,
+                patName: this.patientName,
+                patPhone: this.patientPhone,
+                patAddress: this.patientAddress,
+                patCity: this.patientCity,
+                patState: this.patientState,
+                patZip: this.patientZip,
+                patSSN: this.patientSSN,
+                patIType: this.inputPatientInsuranceType,
+                patIName: this.inputPatientInsuranceName
+            }).then((res)=>{
+                console.log(res.data)
+            }).catch((err)=>{
+                console.error(err)
+            })
+
             alert("Patient " + this.patientName + " has been added!");
             // this.$emit('changeComp', 'patients');
-            this.$router.push('/patients')
+            // this.$router.push('/patients')
         }
     }
 }
