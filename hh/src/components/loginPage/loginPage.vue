@@ -6,17 +6,10 @@
         <h1 class="h3 font-weight-bold">HOPEFULLYHEALING</h1>
         <span class="text-muted">ULCER PROGRESS TRACKER APP</span>
 
-        <div id="inputsdiv">
-          <div class="row inputs">
-            <i class="material-icons col-1">face</i><label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control col offset-1" placeholder="Email address" required autofocus>
-          </div>
-
-          <div class="row inputs">
-            <i class="material-icons col-1">lock</i><label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control col offset-1" placeholder="Password" required>
-          </div>
-        </div>
+        <br>
+        <br>
+        <p>Welcome to Hopefully Healing. This app will help you track the progress of pressure ulcer</p>
+        <p>Click the buttom below to login</p>
 
         <!-- <div class="checkbox mb-3"></div>
         <label>

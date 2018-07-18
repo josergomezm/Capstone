@@ -15,7 +15,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get('/', (req, res) => {
-    res.send(`Hello World!`)
+    res.send(`Hopefully Healing Says: Hello World!`)
 })
 
 app.get('/hello', (req, res) => {

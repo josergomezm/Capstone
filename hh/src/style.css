@@ -13,6 +13,9 @@ body {
   background: linear-gradient(-90deg, #AD0000, #000000);
   font-family: 'Poppins', sans-serif !important;
 }
+#logoutbtn {
+  right: 5%;
+}
 /* ----------- SCROLLBAR -------------- */
 /* width */
 ::-webkit-scrollbar {

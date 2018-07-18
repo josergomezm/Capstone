@@ -22,44 +22,102 @@
 
             <!-- PATIENT PHONE# INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientPhone" class="sr-only">Patient Phone</label>
+                <i class="material-icons col-1">call</i><label for="inputPatientPhone" class="sr-only">Patient Phone</label>
                 <input v-model="patientPhone" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" required>
             </div>
 
             <!-- PATIENT Address INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientAddress" class="sr-only">Patient Address</label>
+                <i class="material-icons col-1">place</i><label for="inputPatientAddress" class="sr-only">Patient Address</label>
                 <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" required>
             </div>
 
             <!-- PATIENT City INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientCity" class="sr-only">Patient City</label>
+                <i class="material-icons col-1">location_city</i><label for="inputPatientCity" class="sr-only">Patient City</label>
                 <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" placeholder="Patient City" required>
             </div>
 
             <!-- PATIENT State INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientState" class="sr-only">Patient State</label>
-                <input v-model="patientState" id="inputPatientState" class="form-control col offset-1" placeholder="Patient State" required>
+                <i class="material-icons col-1">map</i><label for="inputPatientState" class="sr-only">Patient State</label>
+                <select v-model="patientState" id="inputPatientState" class="form-control col offset-1 h-auto" name="inputPatientState" required>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                    <option value="AS">American Samoa</option>
+                    <option value="GU">Guam</option>
+                    <option value="MP">Northern Mariana Islands</option>
+                    <option value="PR">Puerto Rico</option>
+                    <option value="UM">United States Minor Outlying Islands</option>
+                    <option value="VI">Virgin Islands</option>
+                </select>				
             </div>
 
             <!-- PATIENT Zip INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">perm_identity</i><label for="inputPatientZip" class="sr-only">Patient Zip</label>
+                <i class="material-icons col-1">import_contacts</i><label for="inputPatientZip" class="sr-only">Patient Zip</label>
                 <input v-model="patientZip" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" required>
             </div>
 
             <!-- PATIENT SSN INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">fingerprint</i><label for="inputPatientSSN" class="sr-only">Patient SSN</label>
+                <i class="material-icons col-1">vpn_key</i><label for="inputPatientSSN" class="sr-only">Patient SSN</label>
                 <input v-model="patientSSN" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" required>
             </div>
 
             <!-- PATIENT InsuranceType INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">fingerprint</i><label for="inputPatientInsuranceType" class="sr-only">Patient InsuranceType</label>
-                <select class="form-control col offset-1" name="inputPatientInsuranceType">
+                <i class="material-icons col-1">security</i><label for="inputPatientInsuranceType" class="sr-only">Patient InsuranceType</label>
+                <select v-model="inputPatientInsuranceType" class="form-control col offset-1 h-auto" name="inputPatientInsuranceType" required>
                     <option value="Medicare">Medicare</option>
                     <option value="Medicaid">Medicaid</option>
                     <option value="Private">Private</option>
@@ -68,11 +126,17 @@
             
             <!-- PATIENT InsuranceName INPUT -->
             <div class="row inputs">
-                <i class="material-icons col-1">fingerprint</i><label for="inputPatientInsuranceName" class="sr-only">Patient InsuranceName</label>
-                <select class="form-control col offset-1" name="inputPatientInsuranceName">
-                    <option value="Medicare">Medicare</option>
-                    <option value="Medicaid">Medicaid</option>
-                    <option value="Private">Private</option>
+                <i class="material-icons col-1">accessible_forward</i><label for="inputPatientInsuranceName" class="sr-only">Patient InsuranceName</label>
+                <select v-model="inputPatientInsuranceName" class="form-control col offset-1 h-auto" name="inputPatientInsuranceName" required>
+                    <option value="Passport Health Group">Passport Health Group</option>
+                    <option value="Unitedhealth Group">Unitedhealth Group</option>
+                    <option value="Wellpoint Inc. Group">Wellpoint Inc. Group</option>
+                    <option value="Kaiser Foundation Group">Kaiser Foundation Group</option>
+                    <option value="Humana Group">Humana Group</option>
+                    <option value="Aetna Group">Aetna Group</option>
+                    <option value="HCSC Group">HCSC Group</option>
+                    <option value="Cigna Health Group">Cigna Health Group</option>
+                    <option value="Highmark Group">Highmark Group</option>
                 </select>
             </div>                   
 
@@ -236,28 +300,42 @@ export default {
     name: 'newpatient',
     data:function() {
         return {
-            length: '15',
-            bodyView: 'BACK',
-            location: 'Lower Back',
-            image: 'tmp-testimage.jpg',
-            date: '7/12/2018',
-            patientID: '111',
-            patientName: 'Taylor Marks',
-            patientPhone: '123123',
-            patientAddress: 'Some adress',
-            patientCity: 'Some City',
-            patientState: 'KY',
-            patientZip: '12312',
-            patientSSN: '132-12-1232',
-            inputPatientInsuranceType: 'Medicare',
-            inputPatientInsuranceName: 'Passport Health Group'
+            // WOUND VARS
+            length: '',
+            bodyView: '',
+            location: '',
+            image: '',
+            date: '',
+            // PATIENT VARS
+            patientID: '',
+            patientName: '',
+            patientPhone: '',
+            patientAddress: '',
+            patientCity: '',
+            patientState: '',
+            patientZip: '',
+            patientSSN: '',
+            inputPatientInsuranceType: '',
+            inputPatientInsuranceName: ''
         }
+    },
+    mounted(){
+        // Populate this.date!
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd = '0'+dd
+        }
+        if(mm<10) {
+            mm = '0'+mm
+        }
+        this.date = mm + '/' + dd + '/' + yyyy;
     },
     methods: {
         addPatient:function(){
             //Do stuff
-            //Then
-            console.log(this.patientName);
             instance.post('/data', {
                 patId: this.patientID,
                 patName: this.patientName,
@@ -277,7 +355,7 @@ export default {
 
             alert("Patient " + this.patientName + " has been added!");
             // this.$emit('changeComp', 'patients');
-            // this.$router.push('/patients')
+            this.$router.push('/patients')
         }
     }
 }
