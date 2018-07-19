@@ -14,6 +14,21 @@ const app = express()
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+// Add headers
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    // Pass to next layer of middleware
+    next();
+});
+
 app.get('/', (req, res) => {
     res.send(`Hopefully Healing Says: Hello World!`)
 })
@@ -44,9 +59,15 @@ app.get('/python', (req, res) => {
     //   console.log('finished');
     });
 })
- 
+
+
 app.get('/data', (req,res) => {
     connection.query(`SELECT * FROM Patients AS p INNER JOIN Wounds AS w ON p.patientId = w.patientId WHERE LOWER(p.fullName) LIKE LOWER('%${req.query.fname}%')`, function (error, results, fields) {
+      res.send(results)
+    });
+})
+app.get('/dataAllPatients', (req,res) => {
+    connection.query(`SELECT * FROM Patients p INNER JOIN Wounds w ON p.patientId = w.patientId`, function (error, results, fields) {
       res.send(results)
     });
 })
@@ -64,10 +85,12 @@ app.post('/data', (req, res) =>{
     var patIName = req.body.patIName || 'NULL';
     var imagePath = req.body.imagePath || 'NULL';
     var woundSize = req.body.woundSize || 0.0;
-    var woundLocation = req.body.woundLocation || 'FRONT';
+    var woundView = req.body.woundView || 'FRONT';
+    var woundLocation = req.body.woundLocation || 'Head (Front)';
+    var woundDate = req.body.woundDate;
 
     PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}');`
-    // WoundQueryString=`INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation) VALUES (NULL,${patId},'${imagePath}',${woundSize},'${woundView}','${woundLocation}');`
+    WoundQueryString=`INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,${patId},'${imagePath}',${woundSize},'${woundView}','${woundLocation}', '${woundDate}');`
     
     
 
@@ -76,19 +99,20 @@ app.post('/data', (req, res) =>{
         if(error){
             res.write(JSON.stringify(error))
             res.end()
-
         }else{
-            res.send('patient has been added into the database!')
-            // connection.query(WoundQueryString, function (error, results, fields) {
-            //     if(error){
-            //         res.write(JSON.stringify(error))
-            //         res.end()
-            //     }
-            //     console.log(results)
-            //     res.send('patient has been added into the database!')
-            // });        
+            // res.send('patient has been added into the database!')      
+            connection.query(WoundQueryString, function (error, results, fields) {
+                if(error){
+                    res.write(JSON.stringify(error))
+                    res.end()
+                }else{
+                    console.log(results)
+                    res.send('patient has been added into the database!')
+                }
+            });  
         }
     });
+
 })
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))

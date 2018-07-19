@@ -44,11 +44,12 @@ CREATE TABLE HopefullyHealing.Wounds (
   `woundSize_cm` float NOT NULL,
   `woundView` ENUM('FRONT','BACK','RIGHT','LEFT') COLLATE UTF8_UNICODE_CI NOT NULL,
   `woundLocation` ENUM('Head (Front)', 'Right Shoulder (Front)', 'Chest', 'Left Shoulder (Front)', 'Right Arm (Front)', 'Abdomen', 'Left Arm (Front)', 'Right Hand (Front)', 'Pelvis (Front)', 'Left Hand (Front)', 'Right Leg (Front)', 'Left Leg (Front)', 'Right Crus', 'Left Crus', 'Right Foot (Front)', 'Left Foot (Front)', 'Head (Back)', 'Left Shoulder (Back)', 'Back', 'Right Shoulder (Back)', 'Left Arm (Back)', 'Lower Back', 'Right Arm (Back)', 'Left Hand (Back)', 'Gluteus', 'Right Hand (Back)', 'Left Leg (Back)', 'Right Leg (Back)', 'Left Calf', 'Right Calg', 'Left Foot (Back)', 'Right Foot (Back)', 'Head (Right Side)', 'Right Shoulder (Side)', 'Right Arm (Side)', 'Pelvis (Right Side)', 'Right Leg (Side)', 'Right Fibula (Side)', 'Right Foot (Side)', 'Head (Left Side)', 'Left Shoulder (Side)', 'Left Arm (Side)', 'Pelvis (Left Side)', 'Left Leg (Side)', 'Left Fibula (Side)', 'Left Foot (Side)') COLLATE UTF8_UNICODE_CI NOT NULL,
+  `woundDate` DATETIME NOT NULL DEFAULT current_timestamp(),
 -- Need to know what is Tissue A, B, C, D.
-  `tissueA` float COLLATE UTF8_UNICODE_CI NOT NULL,
-  `tissueB` float COLLATE UTF8_UNICODE_CI NOT NULL,
-  `tissueC` float COLLATE UTF8_UNICODE_CI NOT NULL,
-  `tissueD` float COLLATE UTF8_UNICODE_CI NOT NULL,
+  `tissueA` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
+  `tissueB` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
+  `tissueC` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
+  `tissueD` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
   PRIMARY KEY (`woundId`),
   FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
   UNIQUE KEY `woundId_UNIQUE` (`woundId`)

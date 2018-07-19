@@ -158,14 +158,14 @@
             <div id="ulcerlocationdiv">
                 <h2 class="h5 mt-3 font-weight-bold">Where is the ulcer located?</h2>
                 <div class="row body-view">
-                    <div class="col-3" v-on:click="bodyView = 'front'">FRONT</div>
-                    <div class="col-3" v-on:click="bodyView = 'back'">BACK</div>
-                    <div class="col-3" v-on:click="bodyView = 'right'">RIGHT</div>
-                    <div class="col-3" v-on:click="bodyView = 'left'">LEFT</div>
+                    <div class="col-3" v-on:click="bodyView = 'FRONT'">FRONT</div>
+                    <div class="col-3" v-on:click="bodyView = 'BACK'">BACK</div>
+                    <div class="col-3" v-on:click="bodyView = 'RIGHT'">RIGHT</div>
+                    <div class="col-3" v-on:click="bodyView = 'LEFT'">LEFT</div>
                 </div>
                 <div id="bodyfig" v-bind:class="bodyView">
                     <!-- FRONT VIEW -->
-                    <div style="padding-top: 22px;" v-if="bodyView === 'front'">
+                    <div style="padding-top: 22px;" v-if="bodyView === 'FRONT'">
                         <div class="row justify-content-center">
                             <div class="bodyPart col-2" title="Head (Front)" v-on:click="location = 'Head (Front)'"></div>
                         </div>
@@ -198,7 +198,7 @@
                         </div>                      
                     </div>
                     <!-- BACK VIEW -->
-                    <div style="padding-top: 22px;" v-if="bodyView === 'back'">
+                    <div style="padding-top: 22px;" v-if="bodyView === 'BACK'">
                         <div class="row justify-content-center">
                             <div class="bodyPart col-2" title="Head (Back)" v-on:click="location = 'Head (Back)'"></div>
                         </div>
@@ -231,7 +231,7 @@
                         </div>                      
                     </div>
                     <!-- RIGHT VIEWS -->
-                    <div style="padding-top: 18px;" v-if="bodyView === 'right'">
+                    <div style="padding-top: 18px;" v-if="bodyView === 'RIGHT'">
                         <div class="row justify-content-center">
                             <div class="bodyPart col-3" title="Head (Right Side)" v-on:click="location = 'Head (Right Side)'"></div>
                         </div>
@@ -255,7 +255,7 @@
                         </div>                      
                     </div>
                     <!-- LEFT VIEW -->
-                    <div style="padding-top: 18px;" v-if="bodyView === 'left'">
+                    <div style="padding-top: 18px;" v-if="bodyView === 'LEFT'">
                         <div class="row justify-content-center">
                             <div class="bodyPart col-3" title="Head (Left Side)" v-on:click="location = 'Head (Left Side)'"></div>
                         </div>
@@ -322,16 +322,25 @@ export default {
     mounted(){
         // Populate this.date!
         var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-        if(dd<10) {
-            dd = '0'+dd
+        // var dd = today.getDate();
+        // var mm = today.getMonth()+1; //January is 0!
+        // var yyyy = today.getFullYear();
+        // if(dd<10) {
+        //     dd = '0'+dd
+        // }
+        // if(mm<10) {
+        //     mm = '0'+mm
+        // }
+        // this.date = mm + '/' + dd + '/' + yyyy;
+
+        function twoDigits(d) {
+            if(0 <= d && d < 10) return "0" + d.toString();
+            if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+            return d.toString();
         }
-        if(mm<10) {
-            mm = '0'+mm
-        }
-        this.date = mm + '/' + dd + '/' + yyyy;
+
+        this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
+
     },
     methods: {
         addPatient:function(){
@@ -346,16 +355,24 @@ export default {
                 patZip: this.patientZip,
                 patSSN: this.patientSSN,
                 patIType: this.inputPatientInsuranceType,
-                patIName: this.inputPatientInsuranceName
+                patIName: this.inputPatientInsuranceName,
+                woundDate: this.date,
+                imagePath: this.image,
+                woundSize: this.length,
+                woundView: this.bodyView,
+                woundLocation: this.location
             }).then((res)=>{
                 console.log(res.data)
+                if(res.data.sqlMessage != undefined){
+                    alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
+                }
+                else {
+                    alert("Patient " + this.patientName + " has been added!");
+                    this.$router.push('/patients')
+                }
             }).catch((err)=>{
                 console.error(err)
-            })
-
-            alert("Patient " + this.patientName + " has been added!");
-            // this.$emit('changeComp', 'patients');
-            this.$router.push('/patients')
+            })            
         }
     }
 }

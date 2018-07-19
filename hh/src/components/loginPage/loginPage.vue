@@ -29,18 +29,17 @@ export default {
   props: ['auth'],
   data:function() {
     return {
-      username: '',
-      password: ''
+
     }
   },
   methods: {
     loginHH:function() {
       const auth = new AuthService()
       const { login, logout, authenticated, authNotifier } = auth
-
       console.log(auth)
       // console.log(auth.login)
       auth.login()
+      debugger
       //Email: fake@fake.fake - Password: Fake123456
       
       //Check if username&password matching is in DB

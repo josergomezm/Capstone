@@ -19,7 +19,7 @@
             <div class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">Patient Name</div>
-                <div class="col-3 d-none d-sm-block">First Entry</div>
+                <div class="col-3 d-none d-sm-block">Patient ID</div>
                 <div class="col-3 d-none d-sm-block">Last Entry</div>
                 <div class="col-2 d-none d-sm-block">Number of Wounds</div>
               </div>
@@ -30,37 +30,13 @@
 
         <ul id="patients">
 
-          <li class="row">
+          <li v-for="patient in patients" :key="patient.patientId" class="row">
             <a v-on:click="patientStatus" class="col-12 col-sm-10">
               <div class="row">
-                <div class="col">John Doe</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-secondary col" v-on:click="updatePatient">Update</button>
-          </li>
-
-          <li class="row">
-            <a v-on:click="patientStatus" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">Carlos Jimenez</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
-              </div>
-            </a>
-            <button type="button" class="btn btn-secondary col" v-on:click="updatePatient">Update</button>
-          </li>
-
-          <li class="row">
-            <a v-on:click="patientStatus" class="col-12 col-sm-10">
-              <div class="row">
-                <div class="col">Malandreo Bandera</div>
-                <div class="col-3 d-none d-sm-block">1/1/2018</div>
-                <div class="col-3 d-none d-sm-block">14/1/2018</div>
-                <div class="col-2 d-none d-sm-block">1</div>
+                <div class="col">{{ patient.fullName }}</div>
+                <div class="col-3 d-none d-sm-block">{{ patient.patientId }}</div>
+                <div class="col-3 d-none d-sm-block">PENDING</div>
+                <div class="col-2 d-none d-sm-block">PENDING</div>
               </div>
             </a>
             <button type="button" class="btn btn-secondary col" v-on:click="updatePatient">Update</button>
@@ -82,17 +58,14 @@ export default {
   name: 'locations',
   data(){
     return {
-      patients: {}
+      patients: []
     }
   },
   created (){
     //Get patients
-    instance.get('/data', {
-        params: {
-          fullName: 'John'
-        }
-    }).then((res)=>{
+    instance.get('/dataAllPatients', {}).then((res)=>{
         console.log(res.data)
+        this.patients = res.data;
     }).catch((err)=>{
         console.error(err)
     })
