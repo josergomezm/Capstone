@@ -1,44 +1,47 @@
 <template id="newpatient">
-    <div id="newpatientdiv" class="container-fluid">
+    <div id="viewdiv" class="container-fluid">
     <div id="maincontent">
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
-      <form class="form-newpatient text-center">
+      <form class="form-newpatient text-center container-fluid">
 
         <h1 class="h3 font-weight-bold">ADD NEW PATIENT</h1>
 
-        <div id="inputsdiv">
+        <div id="inputsdiv" class="row justify-content-center">
+
+            <!-- ------------------------------------------------------ LEFTSIDE -------------------------------------------------------------- -->
+            <div class="col-md-5">
 
             <!-- PATIENT ID INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">fingerprint</i><label for="inputPatientID" class="sr-only">Patient ID</label>
-                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" required autofocus>
+                <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" maxlength="11" required autofocus>
             </div>
 
             <!-- PATIENT NAME INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">perm_identity</i><label for="inputPatientName" class="sr-only">Patient Full Name</label>
-                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" required>
+                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" maxlength="1000" required>
             </div>
 
             <!-- PATIENT PHONE# INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">call</i><label for="inputPatientPhone" class="sr-only">Patient Phone</label>
-                <input v-model="patientPhone" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" required>
+                <input v-model="patientPhone" type="number" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" maxlength="13" required>
             </div>
 
-            <!-- PATIENT Address INPUT -->
+            <!-- PATIENT ADDRESS INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">place</i><label for="inputPatientAddress" class="sr-only">Patient Address</label>
-                <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" required>
+                <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" maxlength="100" required>
             </div>
 
-            <!-- PATIENT City INPUT -->
+            <!-- PATIENT CITY INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">location_city</i><label for="inputPatientCity" class="sr-only">Patient City</label>
-                <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" placeholder="Patient City" required>
+                <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" placeholder="Patient City" maxlength="100" required>
             </div>
 
-            <!-- PATIENT State INPUT -->
+            <!-- PATIENT STATE INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">map</i><label for="inputPatientState" class="sr-only">Patient State</label>
                 <select v-model="patientState" id="inputPatientState" class="form-control col offset-1 h-auto" name="inputPatientState" required>
@@ -102,16 +105,16 @@
                 </select>				
             </div>
 
-            <!-- PATIENT Zip INPUT -->
+            <!-- PATIENT ZIP INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">import_contacts</i><label for="inputPatientZip" class="sr-only">Patient Zip</label>
-                <input v-model="patientZip" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" required>
+                <input v-model="patientZip" type="number" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" maxlength="5" required>
             </div>
 
             <!-- PATIENT SSN INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">vpn_key</i><label for="inputPatientSSN" class="sr-only">Patient SSN</label>
-                <input v-model="patientSSN" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" required>
+                <input v-model="patientSSN" type="password" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" maxlength="9" required>
             </div>
 
             <!-- PATIENT InsuranceType INPUT -->
@@ -123,6 +126,10 @@
                     <option value="Private">Private</option>
                 </select>
             </div>
+
+            </div>
+            <!-- ------------------------------------------------------ RIGHTSIDE -------------------------------------------------------------- -->
+            <div class="col-md-5 offset-md-1">    
             
             <!-- PATIENT InsuranceName INPUT -->
             <div class="row inputs">
@@ -138,7 +145,7 @@
                     <option value="Cigna Health Group">Cigna Health Group</option>
                     <option value="Highmark Group">Highmark Group</option>
                 </select>
-            </div>                   
+            </div>                        
 
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
@@ -284,6 +291,8 @@
             <div v-if="location.length > 0" class="row inputs">
                 <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
                 <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
+            </div>
+
             </div>
         </div>
         <!-- ADD PATIENT BUTTON -->

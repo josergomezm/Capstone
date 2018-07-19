@@ -1,5 +1,5 @@
 <template id="patients">
-  <div id="patientsdiv" class="container-fluid">
+  <div id="viewdiv" class="container-fluid">
     <div id="maincontent">
 
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
@@ -28,7 +28,7 @@
           </div>
         </div> 
 
-        <ul id="patients">
+        <ul id="patientsList">
 
           <li v-for="patient in patients" :key="patient.patientId" class="row">
             <a v-on:click="patientStatus" class="col-12 col-sm-10">

@@ -12,9 +12,45 @@ body {
   /* background: linear-gradient(-135deg, #AD0000, #000000); */
   background: linear-gradient(-90deg, #AD0000, #000000);
   font-family: 'Poppins', sans-serif !important;
+  min-width: 320px;
+}
+a:hover {
+  cursor: pointer;
+}
+#viewdiv {
+  background: #fff;
+  width: 95%;
+  height: 95%;
+  border-radius: 25px;
+  box-shadow: 10px 1px 100px #111;
+}
+#viewdiv img {
+  padding: 0 20px 20px 20px;
+  left: 0;
 }
 #logoutbtn {
   right: 5%;
+}
+#maincontent {
+  margin: 20px 0;
+  min-height: 85vh;
+	height: 90%;
+}
+/* ----------- BUTTON DANGER BS-REDO -------------- */
+.btn-danger {
+  color: #fff;
+  background-color: #AD0000;
+  border-color: #AD0000;
+}
+.btn-danger:hover {
+  color: #fff;
+  background-color: #AD0000de;
+  border-color: #AD0000de;
+}
+.btn-danger:active {
+  color: #fff;
+  background-color: #730000 !important;
+  border-color: #730000 !important;
 }
 /* ----------- SCROLLBAR -------------- */
 /* width */

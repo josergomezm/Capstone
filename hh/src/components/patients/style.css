@@ -1,43 +1,24 @@
-a:hover {
-  cursor: pointer;
-}
-#patientsdiv {
-  background: #fff;
-  width: 95%;
-  height: 95%;
-  border-radius: 25px;
-  box-shadow: 10px 1px 100px #111;
-}
-#patientsdiv img {
-  padding: 0 20px 20px 20px;
-  left: 0;
-}
-#maincontent {
-	margin: 20px 0;
-	overflow-y: auto;
-	height: 90%;
-}
 #headers > div {
 	margin: 0 20px;
 	padding: 0 15px;
 }
-#patients {
+#patientsList {
 	border-radius: 25px;
 	padding: 5px 0;
 	overflow-y: auto;
 	height: 40vh;
 }
-#patients li {
+#patientsList li {
 	list-style: none;
 	border-bottom: 1px solid #666;
 	margin: 0 20px;
 	padding: 15px;
 }
-#patients a {
+#patientsList a {
 	color: #313131;
 	margin-bottom: 5px;
 }
-#patients a:hover {
+#patientsList a:hover {
 	color: #313131;
 	text-decoration: none;
 }

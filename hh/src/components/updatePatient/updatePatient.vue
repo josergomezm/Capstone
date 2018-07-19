@@ -1,12 +1,12 @@
-<template id="newpatient">
-    <div id="newpatientdiv" class="container-fluid">
+<template id="updatepatient">
+    <div id="viewdiv" class="container-fluid">
     <div id="maincontent">
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
-      <form class="form-newpatient text-center">
+      <form class="form-updatepatient text-center">
 
-        <h1 class="h3 font-weight-bold">UPDATE PATIENT</h1>
+        <h1 class="h3 mb-4 font-weight-bold">UPDATE PATIENT</h1>
 
-        <div id="inputsdiv">
+        <div id="inputsdiv" class="container">
 
             <!-- PATIENT NAME INPUT -->
             <div class="row inputs">
@@ -165,44 +165,39 @@
                             <div class="bodyPart col-2" title="Left Foot (Side)" v-on:click="location = 'Left Foot (Side)'"></div>
                         </div>                     
                     </div>
-                </div>
-
-                <!-- ULCER LOCATION INPUT -->
-                <div v-if="location.length > 0" class="row inputs">
-                    <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
-                    <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
-                </div>
-                
+                </div>              
             </div>
-            
-        </div>
-        <div id="ulcerlocationdivA" v-if="showing === 'oldUlcer'">
-            <ul id="ulcerlocations" class="text-center">
-                <a v-on:click="location = 'Left Foot (Side)'">
-                    <li>
-                    Left Foot (Side)
-                    </li>
-                </a>
-                <a v-on:click="location = 'Head (Right Side)'">
-                    <li>
-                    Head (Right Side)
-                    </li>
-                </a>
-                <a v-on:click="location = 'Lower Back'">
-                    <li>
-                    Lower Back
-                    </li>
-                </a>
-            </ul>
+
+            <div id="ulcerlocationdivA" v-if="showing === 'oldUlcer'">
+                <ul id="ulcerlocations" class="text-center">
+                    <a v-on:click="location = 'Left Foot (Side)'">
+                        <li>
+                        Left Foot (Side)
+                        </li>
+                    </a>
+                    <a v-on:click="location = 'Head (Right Side)'">
+                        <li>
+                        Head (Right Side)
+                        </li>
+                    </a>
+                    <a v-on:click="location = 'Lower Back'">
+                        <li>
+                        Lower Back
+                        </li>
+                    </a>
+                </ul>
+            </div>  
 
             <!-- ULCER LOCATION INPUT -->
             <div v-if="location.length > 0" class="row inputs">
                 <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
                 <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
             </div>
+
+            <!-- ADD PATIENT BUTTON -->
+            <button v-on:click="updatePatient" class="btn btn-lg btn-danger btn-block" type="submit">Update Patient</button>
+            
         </div>
-        <!-- ADD PATIENT BUTTON -->
-        <button v-on:click="updatePatient" class="btn btn-lg btn-danger btn-block" type="submit">Update Patient</button>
       </form>
     </div>
     </div>
@@ -210,7 +205,7 @@
 
 <script>
 export default {
-    name: 'newpatient',
+    name: 'updatepatient',
     data:function() {
         return {
             patientName: 'John Doe',

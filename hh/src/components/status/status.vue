@@ -1,5 +1,5 @@
 <template id="status">
-    <div id="statusdiv" class="container-fluid">
+    <div id="viewdiv" class="container-fluid">
     <div id="maincontent">
 
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
@@ -29,7 +29,7 @@
             <h2 class="h4">Location: <span>{{ location }}</span></h2>
             <div id="ulcerLocation" v-bind:class="locationSide">
               <!-- FRONT VIEW -->
-              <div style="padding-top: 22px;" v-if="locationSide === 'front'">
+              <div style="padding-top: 22px;" v-if="locationSide === 'FRONT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Head (Front)"></div>
                   </div>
@@ -62,7 +62,7 @@
                   </div>                       
               </div>
               <!-- BACK VIEW -->
-              <div style="padding-top: 22px;" v-if="locationSide === 'back'">
+              <div style="padding-top: 22px;" v-if="locationSide === 'BACK'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Head (Back)"></div>
                   </div>
@@ -95,7 +95,7 @@
                   </div>                
               </div>
               <!-- RIGHT VIEWS -->
-              <div style="padding-top: 18px;" v-if="locationSide === 'right'">
+              <div style="padding-top: 18px;" v-if="locationSide === 'RIGHT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-3" title="Head (Right Side)"></div>
                   </div>
@@ -119,7 +119,7 @@
                   </div>                   
               </div>
               <!-- LEFT VIEW -->
-              <div style="padding-top: 18px;" v-if="locationSide === 'left'">
+              <div style="padding-top: 18px;" v-if="locationSide === 'LEFT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-3" title="Head (Left Side)"></div>
                   </div>

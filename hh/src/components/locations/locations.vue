@@ -1,30 +1,33 @@
 <template id="locations">
-  <div id="locationsdiv" class="container">
+  <div id="viewdiv" class="container-fluid">
+    <div id="maincontent">
 
-    <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
+      <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
+      <button type="button" id="logoutbtn" class="mt-4 btn btn-dark float-right position-relative" v-on:click="logOut">Logout</button>
 
-    <div class="text-center">
-      
-      <h1 class="h3 mb-4 font-weight-bold">Locations</h1>
+      <div class="text-center">
+        
+        <h1 class="h3 mb-4 font-weight-bold">Locations</h1>
 
-      <div class="container">
-        <ul id="locations" class="text-center">
-          <a v-on:click="goToPatients">
-            <li>
-              Location 1
-            </li>
-          </a>
-          <a v-on:click="goToPatients">
-            <li>
-              Location 2
-            </li>
-          </a>
-          <a v-on:click="goToPatients">
-            <li>
-              Location 3
-            </li>
-          </a>
-        </ul>          
+        <div class="container">
+          <ul id="locations" class="text-center">
+            <a v-on:click="goToPatients">
+              <li>
+                Location 1
+              </li>
+            </a>
+            <a v-on:click="goToPatients">
+              <li>
+                Location 2
+              </li>
+            </a>
+            <a v-on:click="goToPatients">
+              <li>
+                Location 3
+              </li>
+            </a>
+          </ul>          
+        </div>
       </div>
     </div>
   </div>
