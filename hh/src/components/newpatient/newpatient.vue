@@ -2,7 +2,7 @@
     <div id="viewdiv" class="container-fluid">
     <div id="maincontent">
       <img class="mb-4" src="@/assets/speedlogo.png" alt="" width="200">
-      <form class="form-newpatient text-center container-fluid">
+      <form v-on:submit.prevent="addPatient" class="form-newpatient text-center container-fluid">
 
         <h1 class="h3 font-weight-bold">ADD NEW PATIENT</h1>
 
@@ -15,30 +15,35 @@
             <div class="row inputs">
                 <i class="material-icons col-1">fingerprint</i><label for="inputPatientID" class="sr-only">Patient ID</label>
                 <input v-model="patientID" id="inputPatientID" class="form-control col offset-1" placeholder="Patient ID" maxlength="11" required autofocus>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT NAME INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">perm_identity</i><label for="inputPatientName" class="sr-only">Patient Full Name</label>
-                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" maxlength="1000" required>
+                <input v-model="patientName" id="inputPatientName" class="form-control col offset-1" placeholder="Patient Full Name" pattern=".{2,}" title="Two or more characters" maxlength="1000" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT PHONE# INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">call</i><label for="inputPatientPhone" class="sr-only">Patient Phone</label>
-                <input v-model="patientPhone" type="number" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" maxlength="13" required>
+                <input v-model="patientPhone" type="number" id="inputPatientPhone" class="form-control col offset-1" placeholder="Patient Phone" min="1000000000" max="9999999999999" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT ADDRESS INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">place</i><label for="inputPatientAddress" class="sr-only">Patient Address</label>
-                <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" maxlength="100" required>
+                <input v-model="patientAddress" id="inputPatientAddress" class="form-control col offset-1" placeholder="Patient Address" pattern=".{6,}" title="Six or more characters" maxlength="100" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT CITY INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">location_city</i><label for="inputPatientCity" class="sr-only">Patient City</label>
-                <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" placeholder="Patient City" maxlength="100" required>
+                <input v-model="patientCity" id="inputPatientCity" class="form-control col offset-1" pattern=".{3,}" title="Three or more characters" placeholder="Patient City" maxlength="100" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT STATE INPUT -->
@@ -108,13 +113,15 @@
             <!-- PATIENT ZIP INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">import_contacts</i><label for="inputPatientZip" class="sr-only">Patient Zip</label>
-                <input v-model="patientZip" type="number" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" maxlength="5" required>
+                <input v-model="patientZip" type="number" id="inputPatientZip" class="form-control col offset-1" placeholder="Patient Zip" min="10000" max="99999" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT SSN INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">vpn_key</i><label for="inputPatientSSN" class="sr-only">Patient SSN</label>
-                <input v-model="patientSSN" type="password" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" maxlength="9" required>
+                <input v-model="patientSSN" type="password" id="inputPatientSSN" class="form-control col offset-1" placeholder="Patient SSN" pattern=".{9}" title="SSN must be 9 digits (Numbers only)" maxlength="9" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- PATIENT InsuranceType INPUT -->
@@ -150,7 +157,8 @@
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">straighten</i><label for="maxLength" class="sr-only">Max length of the ulcer (cm)</label>
-                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" required>
+                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" max="999" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- UPLOAD IMAGE INPUT -->
@@ -159,6 +167,7 @@
             <div class="row inputs">
                 <i class="material-icons col-1">photo_camera</i><label for="ulcarImage" class="sr-only">Upload Picture</label>
                 <input type="file" name="ulcerImage" class="form-control col offset-1" accept="image/*" required>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             <!-- ULCERLOCATION PICKER -->
@@ -291,12 +300,13 @@
             <div v-if="location.length > 0" class="row inputs">
                 <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
                 <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
+                <span class="validity mr-3 mt-3"></span>
             </div>
 
             </div>
         </div>
         <!-- ADD PATIENT BUTTON -->
-        <button v-on:click="addPatient" class="btn btn-lg btn-danger btn-block" type="submit">Add Patient</button>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Add Patient</button>
       </form>
     </div>
     </div>
@@ -354,6 +364,10 @@ export default {
     methods: {
         addPatient:function(){
             //Do stuff
+            if(this.location.length == 0){
+                alert("Please specify where the ulcer is located");
+            }
+            else
             instance.post('/data', {
                 patId: this.patientID,
                 patName: this.patientName,
@@ -381,6 +395,7 @@ export default {
                 }
             }).catch((err)=>{
                 console.error(err)
+                alert("An error has occured. The patient was not added");
             })            
         }
     }

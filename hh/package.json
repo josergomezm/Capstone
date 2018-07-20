@@ -8,12 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "auth0-js": "^9.7.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mysql": "^2.15.0",
+    "npm": "^6.2.0",
     "python-shell": "^0.5.0",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.5",
