@@ -1,17 +1,23 @@
 import auth0 from 'auth0-js'
 import { AUTH_CONFIG } from './auth0-variables'
-import EventEmitter from 'eventemitter3'
-import router from './../routes'
+import EventEmitter from 'EventEmitter'
+import Router from 'vue-router'
+// import router from './../routes'
+
 
 export default class AuthService {
   authenticated = this.isAuthenticated()
+  admin = this.isAdmin()
+  userProfile = null
   authNotifier = new EventEmitter()
+  router = new Router()
 
   constructor () {
     this.login = this.login.bind(this)
     this.setSession = this.setSession.bind(this)
     this.logout = this.logout.bind(this)
     this.isAuthenticated = this.isAuthenticated.bind(this)
+    this.isAdmin = this.isAdmin.bind(this)
   }
 
   auth0 = new auth0.WebAuth({
@@ -25,23 +31,26 @@ export default class AuthService {
 
   login () {
     this.auth0.authorize()
+    this.handleAuthentication()
+    this.authenticated = this.isAuthenticated()
   }
 
   handleAuthentication () {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        router.replace('home')
+        // this.router.replace('/locations')
+        location.pathname = '/locations'
       } else if (err) {
-        router.replace('home')
+        // this.router.replace('/loginPage')
+        location.pathname = '/'
         console.log(err)
-        alert(`Error: ${err.error}. Check the console for further details.`)
       }
     })
   }
 
   setSession (authResult) {
-    // Set the time that the access token will expire at
+    // Set the time that the Access Token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     )
@@ -52,20 +61,35 @@ export default class AuthService {
   }
 
   logout () {
-    // Clear access token and ID token from local storage
+    // this.auth0.logout()
+    // Clear Access Token and ID Token from local storage
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     this.userProfile = null
     this.authNotifier.emit('authChange', false)
     // navigate to the home route
-    router.replace('home')
+    // this.router.push('/loginPage')
+    location.pathname = '/'
   }
 
   isAuthenticated () {
     // Check whether the current time is past the
-    // access token's expiry time
+    // Access Token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'))
     return new Date().getTime() < expiresAt
+  }
+
+  // getRole () {
+  //   const namespace = 'http://localhost:8080'
+  //   const idToken = localStorage.getItem('id_token')
+  //   if (idToken) {
+  //     return decode(idToken)[`${namespace}/role`] || null
+  //   }
+  // }
+
+  isAdmin () {
+    // return this.getRole() === 'admin'
+    return false
   }
 }

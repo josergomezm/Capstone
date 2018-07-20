@@ -34,8 +34,19 @@
 </template>
 
 <script>
+import instance from '../../services/RESTful'
+import AuthService from '../../auth/AuthService'
+
 export default {
   name: 'locations',
+  props: ['auth'],
+  data () {
+    // this.auth.handleAuthentication()
+    // const auth = new AuthService()
+    // const {handleAuthentication } = auth
+    // auth.handleAuthentication()
+    return {}
+  },
   methods: {
     goToPatients:function() {
       //Check if username&password matching is in DB
@@ -44,6 +55,13 @@ export default {
       //Go to locations.vue --> 
       // this.$emit('changeComp', 'patients');
       this.$router.push('/patients')
+    },
+    logOut(){
+      //Logout
+      const auth = new AuthService()
+      const { logout } = auth
+
+      auth.logout()
     }
   }
 }

@@ -53,6 +53,7 @@
 
 <script>
 import instance from '../../services/RESTful'
+import AuthService from '../../auth/AuthService'
 
 export default {
   name: 'locations',
@@ -120,6 +121,9 @@ export default {
     },
     logOut(){
       //Logout
+      const auth = new AuthService()
+      const { logout } = auth
+      auth.logout()
     }
   }
 }
