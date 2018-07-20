@@ -158,7 +158,7 @@
           </div>
           <!-- TISSUE PRESENCE (%) -->
           <div class="col-md-6">
-            <h2 class="h4">Tissue Presence (%): <span><br>Healthy: {{ tissueA }}%, Tissue B: {{ tissueB }}%,<br> Tissue C: {{ tissueC }}%, Necrotic: {{ tissueD }}%</span></h2>
+            <h2 class="h4">Tissue Presence (%): <span><br>Epithelial: {{ tissueA }}%, Granulation: {{ tissueB }}%,<br> Slough: {{ tissueC }}%, Necrotic: {{ tissueD }}%</span></h2>
           </div>
         </div>
 
@@ -190,7 +190,7 @@ export default {
       pname: 'John Doe',
       pid: '999NH5',
       date: '5/2/18',
-      locationSide: 'back',
+      locationSide: 'BACK',
       location: 'Lower Back',
       length: '15',
       ulcerArea: '180',
@@ -252,7 +252,7 @@ export default {
               borderWidth: 1.1
           },
           {
-              label: 'Tissue A',
+              label: 'Epithelial Tissue',
               data: this.aTissueA,
               backgroundColor: [
                   'rgba(255, 99, 132, 0)'
@@ -263,7 +263,7 @@ export default {
               borderWidth: 1
           },
           {
-            label: 'Tissue B',
+            label: 'Granulation Tissue',
               data: this.aTissueB,
               backgroundColor: [
                   'rgba(54, 162, 235, 0)'
@@ -274,7 +274,7 @@ export default {
               borderWidth: 1
           },
           {
-            label: 'Tissue C',
+            label: 'Slough',
               data: this.aTissueC,
               backgroundColor: [
                   'rgba(255, 206, 86, 0)'
@@ -285,13 +285,13 @@ export default {
               borderWidth: 1
           },
           {
-            label: 'Tissue D',
+            label: 'Necrotic Tissue',
               data: this.aTissueD,
               backgroundColor: [
                   'rgba(75, 192, 192, 0)'
               ],
               borderColor: [
-                  'rgba(75, 192, 192, 1)'
+                  'rgba(0, 0, 0, 1)'
               ],
               borderWidth: 1
           }]

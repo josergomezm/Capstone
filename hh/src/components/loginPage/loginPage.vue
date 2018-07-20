@@ -6,7 +6,7 @@
 
       <div class="container text-center">
 
-        <h1 class="h3 font-weight-bold">HOPEFULLYHEALING</h1>
+        <h1 class="h1 font-weight-bold">HOPEFULLYHEALING</h1>
         <span class="text-muted">ULCER PROGRESS TRACKER APP</span>
 
         <div id="introText" class="mt-4">

@@ -50,6 +50,7 @@
             <div class="row inputs">
                 <i class="material-icons col-1">map</i><label for="inputPatientState" class="sr-only">Patient State</label>
                 <select v-model="patientState" id="inputPatientState" class="form-control col offset-1 h-auto" name="inputPatientState" required>
+                    <option value="" disabled selected>Patient State</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -128,6 +129,7 @@
             <div class="row inputs">
                 <i class="material-icons col-1">security</i><label for="inputPatientInsuranceType" class="sr-only">Patient InsuranceType</label>
                 <select v-model="inputPatientInsuranceType" class="form-control col offset-1 h-auto" name="inputPatientInsuranceType" required>
+                    <option value="" disabled selected>Patient Insurance Type</option>
                     <option value="Medicare">Medicare</option>
                     <option value="Medicaid">Medicaid</option>
                     <option value="Private">Private</option>
@@ -142,6 +144,7 @@
             <div class="row inputs">
                 <i class="material-icons col-1">accessible_forward</i><label for="inputPatientInsuranceName" class="sr-only">Patient InsuranceName</label>
                 <select v-model="inputPatientInsuranceName" class="form-control col offset-1 h-auto" name="inputPatientInsuranceName" required>
+                    <option value="" disabled selected>Patient Insurance Name</option>
                     <option value="Passport Health Group">Passport Health Group</option>
                     <option value="Unitedhealth Group">Unitedhealth Group</option>
                     <option value="Wellpoint Inc. Group">Wellpoint Inc. Group</option>
@@ -363,7 +366,7 @@ export default {
     },
     methods: {
         addPatient:function(){
-            //Do stuff
+            // //Do stuff
             if(this.location.length == 0){
                 alert("Please specify where the ulcer is located");
             }

@@ -1,3 +1,9 @@
 #introText{
   height: 40vh;
+  font-size: 18px;
+}
+#maincontent {
+  background-image: url(./../../assets/bg-img-1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
