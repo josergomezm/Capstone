@@ -3,9 +3,9 @@
 */
 
 SET FOREIGN_KEY_CHECKS=0; 
+    DROP TABLE IF EXISTS HopefullyHealing.Locations;
     DROP TABLE IF EXISTS HopefullyHealing.Patients;
     DROP TABLE IF EXISTS HopefullyHealing.Wounds;
-    DROP TABLE IF EXISTS HopefullyHealing.Visits;
     DROP DATABASE IF EXISTS HopefullyHealing;
 SET FOREIGN_KEY_CHECKS=1;
 
@@ -15,6 +15,25 @@ CREATE DATABASE IF NOT EXISTS HopefullyHealing;
 /*
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+
+-- 
+--  TABLE STRUCTURE FOR: Locations Table
+-- 
+CREATE TABLE HopefullyHealing.Locations (
+  `locationId` int(11) NOT NULL AUTO_INCREMENT,
+  `locationName` VARCHAR(250) COLLATE UTF8_UNICODE_CI NOT NULL,
+  PRIMARY KEY (`locationId`),
+  UNIQUE KEY `locationId_UNIQUE` (`locationId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
+
+INSERT INTO HopefullyHealing.Locations VALUES (1,'Hopefully Healing Hospice Center');
+INSERT INTO HopefullyHealing.Locations VALUES (2,'Hopefully Healing Intense Care Center');
+INSERT INTO HopefullyHealing.Locations VALUES (3,'Hopefully Healing Home Care');
+INSERT INTO HopefullyHealing.Locations VALUES (4,'Signature Health of Fort Knox');
+INSERT INTO HopefullyHealing.Locations VALUES (5,'Rehab and Wellness Center');
+INSERT INTO HopefullyHealing.Locations VALUES (6,'Signature Health of Fort Lauterdale');
+INSERT INTO HopefullyHealing.Locations VALUES (7,'Regency Wellness Center');
+
 
 -- 
 --  TABLE STRUCTURE FOR: Patients
@@ -30,7 +49,9 @@ CREATE TABLE HopefullyHealing.Patients (
   `SSN` BLOB DEFAULT NULL,
   `insuranceType` ENUM('Medicare','Medicaid','Private') COLLATE UTF8_UNICODE_CI NOT NULL,
   `insuranceName` ENUM('Passport Health Group','Unitedhealth Group','Wellpoint Inc. Group','Kaiser Foundation Group','Humana Group','Aetna Group','HCSC Group','Cigna Health Group','Highmark Group') COLLATE UTF8_UNICODE_CI,
+  `locationId` INT(11) NOT NULL,
   PRIMARY KEY (`patientId`),
+  FOREIGN KEY (`locationId`) REFERENCES HopefullyHealing.Locations (`locationId`),
   UNIQUE KEY `patientId_UNIQUE` (`patientId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
@@ -54,23 +75,6 @@ CREATE TABLE HopefullyHealing.Wounds (
   FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
   UNIQUE KEY `woundId_UNIQUE` (`woundId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=UTF8_UNICODE_CI;
-
-
--- 
---  TABLE STRUCTURE FOR: Visits
--- 
-CREATE TABLE HopefullyHealing.Visits (
-  `visitId` int(11) NOT NULL AUTO_INCREMENT,
-  `patientId` int(11) NOT NULL,
-  `woundId` int(11) NOT NULL,
-  `visitDate` DATETIME NOT NULL DEFAULT current_timestamp(),
-  `seenBy` VARCHAR(250) COLLATE UTF8_UNICODE_CI NOT NULL,
-  `physcianNotes` longtext COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-  PRIMARY KEY (`visitId`),
-  FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
-  FOREIGN KEY (`woundId`) REFERENCES HopefullyHealing.Wounds (`woundId`),
-  UNIQUE KEY `visitId_UNIQUE` (`visitId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
 /*
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

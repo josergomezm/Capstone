@@ -72,6 +72,31 @@ app.get('/dataAllPatients', (req,res) => {
     });
 })
 
+app.get('/dataAllLocations', (req,res) => {
+    connection.query(`SELECT * FROM Locations`, function (error, results, fields) {
+      res.send(results)
+    });
+})
+
+app.post('/dataLocations', (req,res) => {
+    var locationId = req.body.locationId;
+    var locationName = req.body.locationName;
+
+    const LocationQueryString = `INSERT INTO HopefullyHealing.Locations VALUES (${locationId},'${locationName}');`
+
+    connection.query(LocationQueryString, function (error, results, fields) {
+        console.log(results)
+        if(error){
+            res.write(JSON.stringify(error))
+            res.end()
+        }else{
+            res.send('patient has been added into the database!')      
+        }
+    });
+
+})
+
+
 app.post('/data', (req, res) =>{
     var patId = req.body.patId;
     var patName = req.body.patName || 'NULL';
@@ -87,9 +112,10 @@ app.post('/data', (req, res) =>{
     var woundSize = req.body.woundSize || 0.0;
     var woundView = req.body.woundView || 'FRONT';
     var woundLocation = req.body.woundLocation || 'Head (Front)';
+    var locationId = req.body.locationId || 1;
     var woundDate = req.body.woundDate;
 
-    PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}');`
+    PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}', ${locationId});`
     WoundQueryString=`INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,${patId},'${imagePath}',${woundSize},'${woundView}','${woundLocation}', '${woundDate}');`
     
     
