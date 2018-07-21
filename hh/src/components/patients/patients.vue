@@ -31,12 +31,12 @@
         <ul id="patientsList">
 
           <li v-for="patient in patients" :key="patient.patientId" class="row">
-            <a v-on:click="patientStatus" class="col-12 col-sm-10">
+            <a v-on:click="patientStatus(patient)" class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">{{ patient.fullName }}</div>
                 <div class="col-3 d-none d-sm-block">{{ patient.patientId }}</div>
-                <div class="col-3 d-none d-sm-block">PENDING</div>
-                <div class="col-2 d-none d-sm-block">PENDING</div>
+                <div class="col-3 d-none d-sm-block">{{ patient.lastEntry }}</div>
+                <div class="col-2 d-none d-sm-block">{{ patient.NumOfWounds}}</div>
               </div>
             </a>
             <button type="button" class="btn btn-secondary col" v-on:click="updatePatient">Update</button>
@@ -95,11 +95,12 @@ export default {
 });
   },
   methods: {
-    patientStatus:function(){
+    patientStatus:function(patient){
       //Do something
       //Then take me to the next component
       // this.$emit('changeComp', 'status');
-      this.$router.push('/status')
+      // console.log(patient);
+      this.$router.push(`/status/${patient.patientId}`)
     },
     updatePatient:function() {
       //Do something

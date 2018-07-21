@@ -11,25 +11,25 @@
         <div class="row">
           <!-- PATIEN NAME -->
           <div class="col-md-4">
-            <h2 class="h4">Patient Name: <span>{{ pname }}</span></h2>
+            <h2 class="h4">Patient Name: <span>{{ patient.fullName }}</span></h2>
           </div>
           <!-- PATIENT ID -->
           <div class="col-md-4">
-            <h2 class="h4">Patient ID: <span>{{ pid }}</span></h2>
+            <h2 class="h4">Patient ID: <span>{{ patient.patientId }}</span></h2>
           </div>
           <!-- DATE -->
           <div class="col-md-4">
-            <h2 class="h4">Date: <span>{{ date }}</span></h2>
+            <h2 class="h4">Last Entry Date: <span>{{ patient.lastEntry }}</span></h2>
           </div>
         </div>
 
         <div class="row">
           <!-- LOCATION -->
           <div class="col-md-6">
-            <h2 class="h4">Location: <span>{{ location }}</span></h2>
-            <div id="ulcerLocation" v-bind:class="locationSide">
+            <h2 class="h4">Location: <span>{{ patient.woundLocation }}</span></h2>
+            <div id="ulcerLocation" v-bind:class="patient.woundView">
               <!-- FRONT VIEW -->
-              <div style="padding-top: 22px;" v-if="locationSide === 'FRONT'">
+              <div style="padding-top: 22px;" v-if="patient.woundView === 'FRONT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Head (Front)"></div>
                   </div>
@@ -62,7 +62,7 @@
                   </div>                       
               </div>
               <!-- BACK VIEW -->
-              <div style="padding-top: 22px;" v-if="locationSide === 'BACK'">
+              <div style="padding-top: 22px;" v-if="patient.woundView === 'BACK'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Head (Back)"></div>
                   </div>
@@ -95,7 +95,7 @@
                   </div>                
               </div>
               <!-- RIGHT VIEWS -->
-              <div style="padding-top: 18px;" v-if="locationSide === 'RIGHT'">
+              <div style="padding-top: 18px;" v-if="patient.woundView === 'RIGHT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-3" title="Head (Right Side)"></div>
                   </div>
@@ -119,7 +119,7 @@
                   </div>                   
               </div>
               <!-- LEFT VIEW -->
-              <div style="padding-top: 18px;" v-if="locationSide === 'LEFT'">
+              <div style="padding-top: 18px;" v-if="patient.woundView === 'LEFT'">
                   <div class="row justify-content-center">
                       <div class="bodyPart col-3" title="Head (Left Side)"></div>
                   </div>
@@ -146,19 +146,19 @@
           </div>
           <!-- PICTURE -->
           <div class="col-md-6 m-auto">
-            <img id="ulcerPicture" src="path-to-image" v-bind:alt=" pname + '\'s Ulcer'">
+            <img id="ulcerPicture" src="path-to-image" v-bind:alt=" patient.fullName + '\'s Ulcer'">
           </div>
         </div>
 
         <div class="row">
           <!-- MAX-LENGTH & AREA -->
           <div class="col-md-6">
-            <h2 class="h4">Length: <span>{{ length }} cm</span></h2>
-            <h2 class="h4">Area: <span>{{ ulcerArea }} cm<sup>2</sup></span></h2>
+            <h2 class="h4">Length: <span>{{ patient.woundSize_cm }} cm</span></h2>
+            <h2 class="h4">Area: <span>{{ patient.woundArea }} cm<sup>2</sup></span></h2>
           </div>
           <!-- TISSUE PRESENCE (%) -->
           <div class="col-md-6">
-            <h2 class="h4">Tissue Presence (%): <span><br>Epithelial: {{ tissueA }}%, Granulation: {{ tissueB }}%,<br> Slough: {{ tissueC }}%, Necrotic: {{ tissueD }}%</span></h2>
+            <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Epithelial: {{ patient.tissueA }}%, Granulation: {{ patient.tissueB }}%,<br> Slough: {{ patient.tissueC }}%, Necrotic: {{ patient.tissueD }}%</span></h2>
           </div>
         </div>
 
@@ -178,6 +178,7 @@
 </template>
 
 <script>
+import instance from '../../services/RESTful'
 
 export default {
   name: 'status',
@@ -187,17 +188,18 @@ export default {
   data() {
     return {
       //Latests Data
-      pname: 'John Doe',
-      pid: '999NH5',
-      date: '5/2/18',
-      locationSide: 'BACK',
-      location: 'Lower Back',
-      length: '15',
-      ulcerArea: '180',
-      tissueA: '30', 
-      tissueB: '40',
-      tissueC: '29',
-      tissueD: '1',
+      patient: [],
+    //   pname: 'John Doe',
+    //   pid: '999NH5',
+    //   date: '5/2/18',
+    //   locationSide: 'BACK',
+    //   location: 'Lower Back',
+    //   length: '15',
+    //   ulcerArea: '180',
+    //   tissueA: '30', 
+    //   tissueB: '40',
+    //   tissueC: '29',
+    //   tissueD: '1',
       //Graph Variables
       aDates: ['5/2/18','5/7/18','5/11/18','5/16/18','5/22/18','5/28/18'],
       aUlcerArea: ['74','70','68','60','51','32'],
@@ -212,7 +214,7 @@ export default {
         // Do something
         //Then:
         // this.$emit('changeComp', 'updatePatient');
-        this.$router.push('/updatePatient')
+        this.$router.push(`/updatePatient/${this.$route.params.patientId}`)
     },
     backToPatients:function(){
         // Do something
@@ -222,7 +224,17 @@ export default {
     }
   },
   created(){
-    //Populate all the variables!
+    //Get patients
+    instance.get('/dataPatientStatus', {
+        params: {
+            patId: this.$route.params.patientId
+        }
+    }).then((res)=>{
+        console.log(res.data)
+        this.patient = res.data[0];
+    }).catch((err)=>{
+        console.error(err)
+    })
   },
   mounted() {
     // Highlight Ulcer Location

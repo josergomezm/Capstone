@@ -55,6 +55,8 @@ CREATE TABLE HopefullyHealing.Patients (
   UNIQUE KEY `patientId_UNIQUE` (`patientId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
+INSERT INTO HopefullyHealing.Patients VALUES (111,'Random Patient','123-456-7890','123 McDonalds St.','Chicago', 'IL', '60632', '123-45-6789', 'Medicare', 'Unitedhealth Group', 1);
+
 -- 
 -- TABLE STRUCTURE FOR: Wounds
 -- 
@@ -67,15 +69,19 @@ CREATE TABLE HopefullyHealing.Wounds (
   `woundLocation` ENUM('Head (Front)', 'Right Shoulder (Front)', 'Chest', 'Left Shoulder (Front)', 'Right Arm (Front)', 'Abdomen', 'Left Arm (Front)', 'Right Hand (Front)', 'Pelvis (Front)', 'Left Hand (Front)', 'Right Leg (Front)', 'Left Leg (Front)', 'Right Crus', 'Left Crus', 'Right Foot (Front)', 'Left Foot (Front)', 'Head (Back)', 'Left Shoulder (Back)', 'Back', 'Right Shoulder (Back)', 'Left Arm (Back)', 'Lower Back', 'Right Arm (Back)', 'Left Hand (Back)', 'Gluteus', 'Right Hand (Back)', 'Left Leg (Back)', 'Right Leg (Back)', 'Left Calf', 'Right Calg', 'Left Foot (Back)', 'Right Foot (Back)', 'Head (Right Side)', 'Right Shoulder (Side)', 'Right Arm (Side)', 'Pelvis (Right Side)', 'Right Leg (Side)', 'Right Fibula (Side)', 'Right Foot (Side)', 'Head (Left Side)', 'Left Shoulder (Side)', 'Left Arm (Side)', 'Pelvis (Left Side)', 'Left Leg (Side)', 'Left Fibula (Side)', 'Left Foot (Side)') COLLATE UTF8_UNICODE_CI NOT NULL,
   `woundDate` DATETIME NOT NULL DEFAULT current_timestamp(),
 -- Need to know what is Tissue A, B, C, D.
-  `tissueA` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
-  `tissueB` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
-  `tissueC` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
-  `tissueD` float COLLATE UTF8_UNICODE_CI DEFAULT NULL, -- NOT NULL,
+  `tissueA` float COLLATE UTF8_UNICODE_CI DEFAULT 0.0, -- NOT NULL,
+  `tissueB` float COLLATE UTF8_UNICODE_CI DEFAULT 0.0, -- NOT NULL,
+  `tissueC` float COLLATE UTF8_UNICODE_CI DEFAULT 0.0, -- NOT NULL,
+  `tissueD` float COLLATE UTF8_UNICODE_CI DEFAULT 0.0, -- NOT NULL,
+  `woundArea` float COLLATE UTF8_UNICODE_CI DEFAULT 0.0,
   PRIMARY KEY (`woundId`),
   FOREIGN KEY (`patientId`) REFERENCES HopefullyHealing.Patients (`patientId`),
   UNIQUE KEY `woundId_UNIQUE` (`woundId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=UTF8_UNICODE_CI;
 
+INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',25,'RIGHT','Head (Right Side)', '2018-07-17 23:30:25');
+INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',15,'RIGHT','Head (Right Side)', '2018-07-22 23:30:25');
+INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',3,'RIGHT','Head (Right Side)', '2018-07-26 23:30:25');
 /*
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */

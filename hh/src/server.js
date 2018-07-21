@@ -66,9 +66,58 @@ app.get('/data', (req,res) => {
       res.send(results)
     });
 })
-app.get('/dataAllPatients', (req,res) => {
-    connection.query(`SELECT * FROM Patients p INNER JOIN Wounds w ON p.patientId = w.patientId`, function (error, results, fields) {
+app.get('/dataPatientStatus', (req,res) => {
+    var patId = req.query.patId;
+    connection.query(`SELECT *
+    FROM Patients AS p
+    INNER JOIN Wounds AS w ON w.patientId = p.patientId
+    INNER JOIN (
+        SELECT p.patientId,count(w.woundId) as NumOfWounds
+        FROM Patients p 
+        INNER JOIN Wounds w ON p.patientId = w.patientId
+        GROUP BY p.patientId
+    ) as q1 ON q1.patientId = p.patientId
+    INNER JOIN (
+        SELECT p.patientId, DATE_FORMAT(lastEntry,'%M %d, %Y') as lastEntry 
+        FROM Patients p 
+        INNER JOIN Wounds w ON p.patientId = w.patientId
+        INNER JOIN (
+            select patientId, max(woundDate) as lastEntry
+            from wounds
+            group by patientId
+            ) mw ON mw.lastEntry = w.woundDate
+        GROUP BY p.patientId
+    ) as q2 ON q2.patientId = p.patientId
+    WHERE p.patientId = ${patId}
+    GROUP BY p.patientId`, function (error, results, fields) {
       res.send(results)
+    });
+})
+
+app.get('/dataAllPatients', (req,res) => {
+    // connection.query(`SELECT * FROM Patients p INNER JOIN Wounds w ON p.patientId = w.patientId`, function (error, results, fields) {
+    connection.query(`SELECT *
+    FROM Patients AS p
+    INNER JOIN Wounds AS w ON w.patientId = p.patientId
+    INNER JOIN (
+        SELECT p.patientId,count(w.woundId) as NumOfWounds
+        FROM Patients p 
+        INNER JOIN Wounds w ON p.patientId = w.patientId
+        GROUP BY p.patientId
+    ) as q1 ON q1.patientId = p.patientId
+    INNER JOIN (
+        SELECT p.patientId, DATE_FORMAT(lastEntry,'%M %d, %Y') as lastEntry 
+        FROM Patients p 
+        INNER JOIN Wounds w ON p.patientId = w.patientId
+        INNER JOIN (
+            select patientId, max(woundDate) as lastEntry
+            from wounds
+            group by patientId
+            ) mw ON mw.lastEntry = w.woundDate
+        GROUP BY p.patientId
+    ) as q2 ON q2.patientId = p.patientId
+    GROUP BY p.patientId`, function (error, results, fields) {
+        res.send(results)
     });
 })
 

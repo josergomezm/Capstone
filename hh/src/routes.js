@@ -56,7 +56,7 @@ export default new Router({
             }
         },
         {
-            path: '/updatePatient',
+            path: '/updatePatient/:patientId',
             component: updatePatient,
             beforeEnter: (to, from, next) => {
                 if (!auth.isAuthenticated()) {
@@ -68,7 +68,7 @@ export default new Router({
             }
         },
         {
-            path: '/status',
+            path: '/status/:patientId',
             component: status,
             beforeEnter: (to, from, next) => {
                 if (!auth.isAuthenticated()) {

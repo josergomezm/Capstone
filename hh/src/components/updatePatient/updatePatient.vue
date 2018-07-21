@@ -204,20 +204,44 @@
 </template>
 
 <script>
+import instance from '../../services/RESTful'
+
 export default {
     name: 'updatepatient',
     data:function() {
         return {
-            patientName: 'John Doe',
-            patientID: '999NH',
+            patient: [],
+            patientName: '',
+            patientID: '',
             length: '',
             bodyView: '',
             location: '',
             image: '',
             date: '',
             showing: '',
-            locations: ''
+            locations: '',
         }
+    },
+    created(){
+        //Get patients
+        instance.get('/dataPatientStatus', {
+            params: {
+                patId: this.$route.params.patientId
+            }
+        }).then((res)=>{
+            console.log(res.data)
+            this.patient = res.data[0];
+            this.patientName = this.patient.fullName,
+            this.patientID = this.$route.params.patientId, //'999NH',
+            this.length = this.patient.woundSize_cm,
+            this.bodyView = this.patient.woundView,
+            this.location = this.patient.woundLocation,
+            this.image = this.patient.imagePath,
+            this.date = this.patient.lastEntry,
+            this.locations = this.patient.locationId
+        }).catch((err)=>{
+            console.error(err)
+        })
     },
     methods: {
         updatePatient:function(){

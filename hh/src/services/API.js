@@ -6,11 +6,15 @@ const instance = axios.create({
   });
 
 
-instance.get('/', {
+instance.get('/dataPatientStatus', {
+    params: {
+        patId: 1113
+    }
 }).then((res)=>{
     console.log(res.data)
+    this.patient = res.data;
 }).catch((err)=>{
-    console.log(err)
+    console.error(err)
 })
 
 // instance.post('/data', {
