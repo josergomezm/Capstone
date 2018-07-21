@@ -11,21 +11,14 @@
 
         <div class="container">
           <ul id="locations" class="text-center">
-            <a v-on:click="goToPatients">
-              <li>
-                Location 1
-              </li>
-            </a>
-            <a v-on:click="goToPatients">
-              <li>
-                Location 2
-              </li>
-            </a>
-            <a v-on:click="goToPatients">
-              <li>
-                Location 3
-              </li>
-            </a>
+            <li v-for="location in locations" :key="location.locationId" class="row">
+             <a v-on:click="goToPatients">
+                <div class="row">
+                <div class="col">{{ location.locationId }}</div>
+                <div class="col">{{ location.locationName }}</div>
+              </div>
+             </a>
+            </li>
           </ul>          
         </div>
       </div>
@@ -41,11 +34,24 @@ export default {
   name: 'locations',
   props: ['auth'],
   data () {
-    // this.auth.handleAuthentication()
-    // const auth = new AuthService()
-    // const {handleAuthentication } = auth
-    // auth.handleAuthentication()
-    return {}
+    return {
+      locations: []
+    }
+  },
+  created(){
+    const auth = new AuthService()
+    const { admin } = auth
+    //Get patients
+    instance.get('/dataLocations', {
+        params: {
+            restrictedLocation: auth.admin
+        }
+    }).then((res)=>{
+        console.log(res.data)
+        this.locations = res.data;
+    }).catch((err)=>{
+        console.error(err)
+    })
   },
   methods: {
     goToPatients:function() {

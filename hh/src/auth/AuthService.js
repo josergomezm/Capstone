@@ -2,6 +2,7 @@ import auth0 from 'auth0-js'
 import { AUTH_CONFIG } from './auth0-variables'
 import EventEmitter from 'EventEmitter'
 import Router from 'vue-router'
+import decode from 'jwt-decode'
 // import router from './../routes'
 
 
@@ -80,16 +81,16 @@ export default class AuthService {
     return new Date().getTime() < expiresAt
   }
 
-  // getRole () {
-  //   const namespace = 'http://localhost:8080'
-  //   const idToken = localStorage.getItem('id_token')
-  //   if (idToken) {
-  //     return decode(idToken)[`${namespace}/role`] || null
-  //   }
-  // }
+  getRole () {
+    const namespace = 'https://hopefullyhealing.com'
+    const idToken = localStorage.getItem('id_token')
+    if (idToken) {
+      return decode(idToken)[`${namespace}/roles`][0] || null
+    }
+  }
 
   isAdmin () {
-    // return this.getRole() === 'admin'
-    return false
+    return this.getRole() === 'admin'
+    // return true
   }
 }

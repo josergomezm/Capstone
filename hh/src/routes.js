@@ -85,7 +85,7 @@ export default new Router({
             component: callback
         },
         {
-            path: '/locations',
+            path: '/locations/',
             name: 'locations',
             component: locations
             ,

@@ -42,6 +42,7 @@ export default {
       // console.log(auth.login)
       auth.login()
       //Email: fake@fake.fake - Password: Fake123456
+      //Email: admin@hh.com - Password: Admin123456
       
       //Check if username&password matching is in DB
       //If in DB: Check if admin or nurse - If not: display alert

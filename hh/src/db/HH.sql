@@ -22,17 +22,18 @@ CREATE DATABASE IF NOT EXISTS HopefullyHealing;
 CREATE TABLE HopefullyHealing.Locations (
   `locationId` int(11) NOT NULL AUTO_INCREMENT,
   `locationName` VARCHAR(250) COLLATE UTF8_UNICODE_CI NOT NULL,
+  `restrictedLocation` TINYINT(1) NOT NULL,
   PRIMARY KEY (`locationId`),
   UNIQUE KEY `locationId_UNIQUE` (`locationId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
-INSERT INTO HopefullyHealing.Locations VALUES (1,'Hopefully Healing Hospice Center');
-INSERT INTO HopefullyHealing.Locations VALUES (2,'Hopefully Healing Intense Care Center');
-INSERT INTO HopefullyHealing.Locations VALUES (3,'Hopefully Healing Home Care');
-INSERT INTO HopefullyHealing.Locations VALUES (4,'Signature Health of Fort Knox');
-INSERT INTO HopefullyHealing.Locations VALUES (5,'Rehab and Wellness Center');
-INSERT INTO HopefullyHealing.Locations VALUES (6,'Signature Health of Fort Lauterdale');
-INSERT INTO HopefullyHealing.Locations VALUES (7,'Regency Wellness Center');
+INSERT INTO HopefullyHealing.Locations VALUES (1,'Hopefully Healing Hospice Center',0);
+INSERT INTO HopefullyHealing.Locations VALUES (2,'Hopefully Healing Intense Care Center',0);
+INSERT INTO HopefullyHealing.Locations VALUES (3,'Hopefully Healing Home Care',0);
+INSERT INTO HopefullyHealing.Locations VALUES (4,'Signature Health of Fort Knox',1);
+INSERT INTO HopefullyHealing.Locations VALUES (5,'Rehab and Wellness Center',1);
+INSERT INTO HopefullyHealing.Locations VALUES (6,'Signature Health of Fort Lauterdale',1);
+INSERT INTO HopefullyHealing.Locations VALUES (7,'Regency Wellness Center',1);
 
 
 -- 
@@ -55,7 +56,8 @@ CREATE TABLE HopefullyHealing.Patients (
   UNIQUE KEY `patientId_UNIQUE` (`patientId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
-INSERT INTO HopefullyHealing.Patients VALUES (111,'Random Patient','123-456-7890','123 McDonalds St.','Chicago', 'IL', '60632', '123-45-6789', 'Medicare', 'Unitedhealth Group', 1);
+INSERT INTO HopefullyHealing.Patients VALUES (111,'John Smith','123-456-7890','123 McDonalds St.','Chicago', 'IL', '60632', '123-45-6789', 'Medicare', 'Unitedhealth Group', 1);
+INSERT INTO HopefullyHealing.Patients VALUES (222,'Taylor Banks','502-111-2948','2811 Blankenbaker St','Nashvill', 'TN', '28211', '330-29-9222', 'Private', 'Humana Group', 2);
 
 -- 
 -- TABLE STRUCTURE FOR: Wounds
@@ -82,6 +84,9 @@ CREATE TABLE HopefullyHealing.Wounds (
 INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',25,'RIGHT','Head (Right Side)', '2018-07-17 23:30:25');
 INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',15,'RIGHT','Head (Right Side)', '2018-07-22 23:30:25');
 INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',3,'RIGHT','Head (Right Side)', '2018-07-26 23:30:25');
+
+INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,222,'healed_Ulcer_Image',12,'FRONT','Chest', '2018-07-19 21:30:25');
+
 /*
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */

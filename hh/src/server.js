@@ -93,6 +93,17 @@ app.get('/dataPatientStatus', (req,res) => {
       res.send(results)
     });
 })
+app.get('/dataLocations', (req,res) => {
+    const restrictedLocation = (req.query.restrictedLocation == 'true')
+    var PatientQueryString = `SELECT * FROM Locations WHERE restrictedLocation = 0`
+    if (restrictedLocation){
+        PatientQueryString = `SELECT * FROM Locations`
+    }
+
+    connection.query(PatientQueryString, function (error, results, fields) {
+      res.send(results)
+    });
+})
 
 app.get('/dataAllPatients', (req,res) => {
     // connection.query(`SELECT * FROM Patients p INNER JOIN Wounds w ON p.patientId = w.patientId`, function (error, results, fields) {
