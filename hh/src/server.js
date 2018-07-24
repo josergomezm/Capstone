@@ -274,7 +274,7 @@ app.post('/data', (req, res) =>{
                     res.write(JSON.stringify(error))
                     res.end()
                 }else{
-                    console.log(woundValues.imageData.toString('base64')) 
+                    // console.log(woundValues.imageData.toString('base64'))
                     console.log(results)
                     res.send('patient has been added into the database!')
                 }
@@ -288,7 +288,7 @@ app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 
 
-
+// DECODE BASE64 IMG
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
       response = {};

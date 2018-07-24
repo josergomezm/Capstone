@@ -220,7 +220,7 @@ export default {
                 patId: this.$route.params.patientId
             }
         }).then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             this.patient = res.data[0];
             this.patientName = this.patient.fullName,
             this.patientID = this.$route.params.patientId, //'999NH',
@@ -230,7 +230,8 @@ export default {
             this.image = this.patient.imagePath,
             this.locations = this.patient.locationId
         }).catch((err)=>{
-            console.error(err)
+            // console.error(err)
+            alert("An error has occured. The patient was not added. " + err);
         })
 
     },
@@ -245,6 +246,17 @@ export default {
         this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
 
     },
+    updated(){
+        //Make sure the image is not to big
+        var uploadField = document.getElementById("ulcerImageFile");
+
+        uploadField.onchange = function() {
+            if(this.files[0].size > 224288){
+            alert("File is too big!");
+            this.value = "";
+            }
+        };
+    },
     methods: {
         getExistingWounds:function(){
             //Get patient wounds
@@ -253,10 +265,11 @@ export default {
                     patId: this.$route.params.patientId
                 }
             }).then((res)=>{
-                console.log('wounds', res.data)
+                // console.log('wounds', res.data)
                 this.wounds = res.data
             }).catch((err)=>{
-                console.error(err)
+                // console.error(err)
+                alert("An error has occured. The patient was not added. " + err);
             })
         },
         updatePatient:function(){
@@ -271,7 +284,7 @@ export default {
                 woundDate: this.date
 
             }).then((res)=>{
-                console.log(res.data)
+                // console.log(res.data)
                 if(res.data.sqlMessage != undefined){
                     alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
                 }
@@ -280,8 +293,8 @@ export default {
                     this.$router.push('/patients')
                 }
             }).catch((err)=>{
-                console.error(err)
-                alert("An error has occured. The patient was not added");
+                // console.error(err)
+                alert("An error has occured. The patient was not added. " + err);
             })
 
             // this.$emit('changeComp', 'patients');

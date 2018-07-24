@@ -56,8 +56,8 @@ CREATE TABLE HopefullyHealing.Patients (
   UNIQUE KEY `patientId_UNIQUE` (`patientId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
-INSERT INTO HopefullyHealing.Patients VALUES (111,'John Smith','123-456-7890','123 McDonalds St.','Chicago', 'IL', '60632', '123-45-6789', 'Medicare', 'Unitedhealth Group', 1);
-INSERT INTO HopefullyHealing.Patients VALUES (222,'Taylor Banks','502-111-2948','2811 Blankenbaker St','Nashvill', 'TN', '28211', '330-29-9222', 'Private', 'Humana Group', 2);
+-- INSERT INTO HopefullyHealing.Patients VALUES (111,'John Smith','123-456-7890','123 McDonalds St.','Chicago', 'IL', '60632', '123-45-6789', 'Medicare', 'Unitedhealth Group', 1);
+-- INSERT INTO HopefullyHealing.Patients VALUES (222,'Taylor Banks','502-111-2948','2811 Blankenbaker St','Nashvill', 'TN', '28211', '330-29-9222', 'Private', 'Humana Group', 2);
 
 -- 
 -- TABLE STRUCTURE FOR: Wounds
@@ -82,11 +82,11 @@ CREATE TABLE HopefullyHealing.Wounds (
   UNIQUE KEY `woundId_UNIQUE` (`woundId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=UTF8_UNICODE_CI;
 
-INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',25,'RIGHT','Head (Right Side)', '2018-07-17 23:30:25');
-INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',15,'RIGHT','Head (Right Side)', '2018-07-22 23:30:25');
-INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',3,'RIGHT','Head (Right Side)', '2018-07-26 23:30:25');
+-- INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',25,'RIGHT','Head (Right Side)', '2018-07-17 23:30:25');
+-- INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',15,'RIGHT','Head (Right Side)', '2018-07-22 23:30:25');
+-- INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,111,'healed_Ulcer_Image',3,'RIGHT','Head (Right Side)', '2018-07-26 23:30:25');
 
-INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,222,'healed_Ulcer_Image',12,'FRONT','Chest', '2018-07-19 21:30:25');
+-- INSERT INTO HopefullyHealing.Wounds (woundId, patientId, imagePath, woundSize_cm, woundView, woundLocation, woundDate) VALUES (NULL,222,'healed_Ulcer_Image',12,'FRONT','Chest', '2018-07-19 21:30:25');
 
 /*
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

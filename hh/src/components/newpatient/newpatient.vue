@@ -169,7 +169,7 @@
 
             <div class="row inputs">
                 <i class="material-icons col-1">photo_camera</i><label for="ulcarImage" class="sr-only">Upload Picture</label>
-                <input type="file" name="ulcerImage" class="form-control col offset-1" v-on:change="convertToBase64" accept="image/*" required>
+                <input id="ulcerImageFile" type="file" name="ulcerImage" class="form-control col offset-1" v-on:change="convertToBase64" accept="image/*" required>
                 <span class="validity mr-3 mt-3"></span>
             </div>
 
@@ -364,7 +364,17 @@ export default {
             return d.toString();
         }
         this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
+    },
+    updated(){
+        //Make sure the image is not to big
+        var uploadField = document.getElementById("ulcerImageFile");
 
+        uploadField.onchange = function() {
+            if(this.files[0].size > 224288){
+            alert("File is too big!");
+            this.value = "";
+            }
+        };
     },
     methods: {
         addPatient:function(){
