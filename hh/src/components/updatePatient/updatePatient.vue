@@ -31,7 +31,7 @@
 
             <div class="row inputs">
                 <i class="material-icons col-1">photo_camera</i><label for="ulcarImage" class="sr-only">Upload Picture</label>
-                <input type="file" name="ulcerImage" class="form-control col offset-1" accept="image/*" required>
+                <input type="file" name="ulcerImage" class="form-control col offset-1" v-on:change="convertToBase64" accept="image/*" required>
             </div>
 
             <h2 class="h5 mt-3 font-weight-bold">Where is the ulcer located?</h2>
@@ -233,7 +233,17 @@ export default {
             // console.error(err)
             alert("An error has occured. The patient was not added. " + err);
         })
-
+        //--------
+        File.prototype.convertToBase64 = function(callback){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                callback(e.target.result)
+            };
+            reader.onerror = function(e) {
+                callback(null, e);
+            };        
+            reader.readAsDataURL(this);
+        };
     },
     mounted(){
         // Populate this.date!
@@ -245,17 +255,6 @@ export default {
         }
         this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
 
-    },
-    updated(){
-        //Make sure the image is not to big
-        var uploadField = document.getElementById("ulcerImageFile");
-
-        uploadField.onchange = function() {
-            if(this.files[0].size > 224288){
-            alert("File is too big!");
-            this.value = "";
-            }
-        };
     },
     methods: {
         getExistingWounds:function(){
@@ -299,6 +298,20 @@ export default {
 
             // this.$emit('changeComp', 'patients');
             // this.$router.push('/patients')
+        },
+        convertToBase64:function(event){
+            const file = event.target.files[0]
+            const that = this
+            if(file.size > 224288){
+                alert("File is too big!");
+                event.target.value = "";
+            }
+            else
+            {
+                file.convertToBase64(function(base64){
+                    that.imageBLOB = base64
+                })
+            }
         }
     }
 }

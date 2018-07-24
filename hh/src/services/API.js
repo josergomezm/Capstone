@@ -6,7 +6,10 @@ const instance = axios.create({
   });
 
 
-instance.get('/python', {
+instance.get('/pythonGetPredictions', {
+    params: {
+        imagePath: 'img1.jpg'
+    }
 }).then((res)=>{
     console.log(res.data)
     this.patient = res.data;

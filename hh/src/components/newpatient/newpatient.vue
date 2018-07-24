@@ -365,17 +365,6 @@ export default {
         }
         this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
     },
-    updated(){
-        //Make sure the image is not to big
-        var uploadField = document.getElementById("ulcerImageFile");
-
-        uploadField.onchange = function() {
-            if(this.files[0].size > 224288){
-            alert("File is too big!");
-            this.value = "";
-            }
-        };
-    },
     methods: {
         addPatient:function(){
             // //Do stuff
@@ -419,10 +408,16 @@ export default {
         convertToBase64:function(event){
             const file = event.target.files[0]
             const that = this
-            file.convertToBase64(function(base64){
-                that.imageBLOB = base64
-                console.log(that.imageBLOB)
-            })
+            if(file.size > 224288){
+                alert("File is too big!");
+                event.target.value = "";
+            }
+            else
+            {
+                file.convertToBase64(function(base64){
+                    that.imageBLOB = base64
+                })
+            }
         }
     }
 }

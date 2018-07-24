@@ -8,18 +8,18 @@
 
         <h1 class="h3 mb-4 font-weight-bold">Patient Status</h1>
 
-        <div class="row">
+        <div class="row mb-4">
           <!-- PATIEN NAME -->
           <div class="col-md-4">
-            <h2 class="h4">Patient Name: <span>{{ patient.fullName }}</span></h2>
+            <h2 class="h4">Patient Name: <br><span>{{ patient.fullName }}</span></h2>
           </div>
           <!-- PATIENT ID -->
           <div class="col-md-4">
-            <h2 class="h4">Patient ID: <span>{{ patient.patientId }}</span></h2>
+            <h2 class="h4">Patient ID: <br><span>{{ patient.patientId }}</span></h2>
           </div>
           <!-- DATE -->
           <div class="col-md-4">
-            <h2 class="h4">Last Entry Date: <span>{{ patient.lastEntry }}</span></h2>
+            <h2 class="h4">Last Entry Date: <br><span>{{ patient.lastEntry }}</span></h2>
           </div>
         </div>
 
@@ -152,18 +152,18 @@
 
         <div class="row">
           <!-- MAX-LENGTH & AREA -->
-          <div class="col-md-6">
+          <div class="col-md-6 my-1">
             <h2 class="h4">Length: <span>{{ patient.woundSize_cm }} cm</span></h2>
             <h2 class="h4">Area: <span>{{ patient.woundArea }} cm<sup>2</sup></span></h2>
           </div>
           <!-- TISSUE PRESENCE (%) -->
-          <div class="col-md-6">
+          <div class="col-md-6 my-1">
             <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Epithelial: {{ patient.tissueA }}%, Granulation: {{ patient.tissueB }}%,<br> Slough: {{ patient.tissueC }}%, Necrotic: {{ patient.tissueD }}%</span></h2>
           </div>
         </div>
 
         <!-- GRAPH -->
-        <canvas class="mt-4" id="ulcerChart"></canvas>
+        <canvas class="my-5 d-none d-sm-block" id="ulcerChart"></canvas>
 
         <!-- UPDATE AND BACK TO PATEINTS BUTTONS -->
         <!-- NEW/EXISTING BUTTONS -->
@@ -246,25 +246,26 @@ export default {
     var ctx = document.getElementById("ulcerChart").getContext('2d');
     //Global Settings:
     Chart.defaults.global.defaultFontFamily = 'Poppins';
-    Chart.defaults.global.defaultFontSize = 18;
-    Chart.defaults.global.defaultFontColor = '#000';
+    Chart.defaults.global.defaultFontSize = 20;
+    Chart.defaults.global.defaultFontColor = '#111';
 
     var ulcerChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: this.aDates,
         datasets: 
-          [{
-            label: 'Area',
-              data: this.aUlcerArea,
-              backgroundColor: [
-                  'rgba(255, 159, 64, 0)'
-              ],
-              borderColor: [
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1.1
-          },
+          [
+        //     {
+        //     label: 'Area',
+        //       data: this.aUlcerArea,
+        //       backgroundColor: [
+        //           'rgba(255, 159, 64, 0)'
+        //       ],
+        //       borderColor: [
+        //           'rgba(255, 159, 64, 1)'
+        //       ],
+        //       borderWidth: 4
+        //   },
           {
               label: 'Epithelial Tissue',
               data: this.aTissueA,
@@ -274,7 +275,7 @@ export default {
               borderColor: [
                   'rgba(255,99,132,1)'
               ],
-              borderWidth: 1
+              borderWidth: 4
           },
           {
             label: 'Granulation Tissue',
@@ -285,7 +286,7 @@ export default {
               borderColor: [
                   'rgba(54, 162, 235, 1)'
               ],
-              borderWidth: 1
+              borderWidth: 4
           },
           {
             label: 'Slough',
@@ -296,7 +297,7 @@ export default {
               borderColor: [
                   'rgba(255, 206, 86, 1)'
               ],
-              borderWidth: 1
+              borderWidth: 4
           },
           {
             label: 'Necrotic Tissue',
@@ -307,7 +308,7 @@ export default {
               borderColor: [
                   'rgba(0, 0, 0, 1)'
               ],
-              borderWidth: 1
+              borderWidth: 4
           }]
       },
       options: {

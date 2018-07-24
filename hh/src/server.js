@@ -1,4 +1,6 @@
 const express = require('express')
+const path = require('path')
+const fs = require('fs')
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
 const connection = mysql.createConnection({
@@ -58,6 +60,28 @@ app.get('/python', (req, res) => {
     //   console.log('The exit code was: ' + code);
     //   console.log('The exit signal was: ' + signal);
     //   console.log('finished');
+    });
+})
+
+app.get('/pythonGetPredictions', (req, res) => {
+    const PythonShell = require('python-shell');
+    const pythonPath = './python/get_tissue_type_percents.py' //'./src/python/hello.py';
+    const pyshell = new PythonShell(pythonPath, {
+        mode: 'json',
+        args: [`--image_path=${path.join(path.join(__dirname,'images'), req.query.imagePath)}`]
+    });
+    
+    pyshell.on('message', function (message) {
+        // console.log(message)
+        res.send(message)
+    });
+    
+    // end the input stream and allow the process to exit
+    pyshell.end(function (err,code,signal) {
+        if(err){
+            res.write(JSON.stringify(err))
+            res.end()
+        }
     });
 })
 
@@ -248,9 +272,19 @@ app.post('/data', (req, res) =>{
     var locationId = req.body.locationId || 1;
     var woundDate = req.body.woundDate;
 
+    // //Get image
+    // var tmp_path = path.join(path.join(__dirname,'images'),'temp_image.png')
+    // fs.writeFile(tmp_path, imageData, function(error){
+    //     if(error){
+    //         res.write(JSON.stringify(error))
+    //         res.end()
+    //     }
+    // });
+
+    // //Execute Python code here first
+    
 
     const PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}', ${locationId});`
-    
     const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
         woundValues = {
             patientId: patId,
