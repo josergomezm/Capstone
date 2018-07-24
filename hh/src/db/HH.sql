@@ -66,6 +66,7 @@ CREATE TABLE HopefullyHealing.Wounds (
   `woundId` int(11) NOT NULL AUTO_INCREMENT,
   `patientId` int(11) NOT NULL,
   `imagePath` VARCHAR(2000) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+  `imageData` LONGBLOB,
   `woundSize_cm` float NOT NULL,
   `woundView` ENUM('FRONT','BACK','RIGHT','LEFT') COLLATE UTF8_UNICODE_CI NOT NULL,
   `woundLocation` ENUM('Head (Front)', 'Right Shoulder (Front)', 'Chest', 'Left Shoulder (Front)', 'Right Arm (Front)', 'Abdomen', 'Left Arm (Front)', 'Right Hand (Front)', 'Pelvis (Front)', 'Left Hand (Front)', 'Right Leg (Front)', 'Left Leg (Front)', 'Right Crus', 'Left Crus', 'Right Foot (Front)', 'Left Foot (Front)', 'Head (Back)', 'Left Shoulder (Back)', 'Back', 'Right Shoulder (Back)', 'Left Arm (Back)', 'Lower Back', 'Right Arm (Back)', 'Left Hand (Back)', 'Gluteus', 'Right Hand (Back)', 'Left Leg (Back)', 'Right Leg (Back)', 'Left Calf', 'Right Calg', 'Left Foot (Back)', 'Right Foot (Back)', 'Head (Right Side)', 'Right Shoulder (Side)', 'Right Arm (Side)', 'Pelvis (Right Side)', 'Right Leg (Side)', 'Right Fibula (Side)', 'Right Foot (Side)', 'Head (Left Side)', 'Left Shoulder (Side)', 'Left Arm (Side)', 'Pelvis (Left Side)', 'Left Leg (Side)', 'Left Fibula (Side)', 'Left Foot (Side)') COLLATE UTF8_UNICODE_CI NOT NULL,

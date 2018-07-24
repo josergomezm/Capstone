@@ -39,7 +39,7 @@
             <!-- NEW/EXISTING BUTTONS -->
             <div class="row mb-2 justify-content-center">
                 <button class="btn btn-danger col-sm-5 loc-btn" type="button" v-on:click="showing = 'newUlcer', location = ''">New</button>
-                <button class="btn btn-danger col-sm-5 loc-btn" type="button" v-on:click="showing = 'oldUlcer', location = ''">Existing</button>
+                <button class="btn btn-danger col-sm-5 loc-btn" type="button" v-on:click="showing = 'oldUlcer', location = '', getExistingWounds()">Existing</button>
             </div>
 
             <!-- ULCERLOCATION PICKER -->
@@ -170,21 +170,11 @@
 
             <div id="ulcerlocationdivA" v-if="showing === 'oldUlcer'">
                 <ul id="ulcerlocations" class="text-center">
-                    <a v-on:click="location = 'Left Foot (Side)'">
-                        <li>
-                        Left Foot (Side)
-                        </li>
-                    </a>
-                    <a v-on:click="location = 'Head (Right Side)'">
-                        <li>
-                        Head (Right Side)
-                        </li>
-                    </a>
-                    <a v-on:click="location = 'Lower Back'">
-                        <li>
-                        Lower Back
-                        </li>
-                    </a>
+                    <li v-for="wound in wounds" :key="wound.woundId">
+                        <a v-on:click="location = wound.woundLocation">
+                            {{ wound.woundLocation }} 
+                        </a>
+                    </li>
                 </ul>
             </div>  
 
@@ -211,6 +201,7 @@ export default {
     data:function() {
         return {
             patient: [],
+            wounds: [],
             patientName: '',
             patientID: '',
             length: '',
@@ -237,19 +228,64 @@ export default {
             this.bodyView = this.patient.woundView,
             this.location = this.patient.woundLocation,
             this.image = this.patient.imagePath,
-            this.date = this.patient.lastEntry,
             this.locations = this.patient.locationId
         }).catch((err)=>{
             console.error(err)
         })
+
+    },
+    mounted(){
+        // Populate this.date!
+        var today = new Date();
+        function twoDigits(d) {
+            if(0 <= d && d < 10) return "0" + d.toString();
+            if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+            return d.toString();
+        }
+        this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
+
     },
     methods: {
+        getExistingWounds:function(){
+            //Get patient wounds
+            instance.get('/dataUpdatePatientGetWounds', {
+                params: {
+                    patId: this.$route.params.patientId
+                }
+            }).then((res)=>{
+                console.log('wounds', res.data)
+                this.wounds = res.data
+            }).catch((err)=>{
+                console.error(err)
+            })
+        },
         updatePatient:function(){
             // Post info in the db
             // Then:
-            alert("Patient " + this.patientName + " has been updated!");
+            instance.post('/updatePatientWound', {
+                patId: this.patientID,
+                imagePath: this.image,
+                woundSize: this.length,
+                woundView: this.bodyView,
+                woundLocation: this.ulcerLocation,
+                woundDate: this.date
+
+            }).then((res)=>{
+                console.log(res.data)
+                if(res.data.sqlMessage != undefined){
+                    alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
+                }
+                else {
+                    alert("Patient " + this.patientName + " has been updated!");
+                    this.$router.push('/patients')
+                }
+            }).catch((err)=>{
+                console.error(err)
+                alert("An error has occured. The patient was not added");
+            })
+
             // this.$emit('changeComp', 'patients');
-            this.$router.push('/patients')
+            // this.$router.push('/patients')
         }
     }
 }

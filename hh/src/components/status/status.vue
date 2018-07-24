@@ -146,7 +146,7 @@
           </div>
           <!-- PICTURE -->
           <div class="col-md-6 m-auto">
-            <img id="ulcerPicture" src="path-to-image" v-bind:alt=" patient.fullName + '\'s Ulcer'">
+            <img id="ulcerPicture" v-bind:src="'data:image/jpeg;base64,'+patient.imageData" v-bind:alt=" patient.fullName + '\'s Ulcer'">
           </div>
         </div>
 
@@ -238,8 +238,10 @@ export default {
   },
   mounted() {
     // Highlight Ulcer Location
-    var x = $("div[title='"+ this.location +"']");
-    x.css("border", "inset 2px #AD0000");
+    setTimeout(() => {
+        var x = $("div[title='"+ this.patient.woundLocation +"']");
+        x.css("border", "inset 2px #AD0000");
+    },100)
     // --------------- MAKE CHART ---------------- //
     var ctx = document.getElementById("ulcerChart").getContext('2d');
     //Global Settings:

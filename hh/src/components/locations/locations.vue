@@ -12,12 +12,7 @@
         <div class="container">
           <ul id="locations" class="text-center">
             <li v-for="location in locations" :key="location.locationId" class="row">
-             <a v-on:click="goToPatients">
-                <div class="row">
-                <div class="col">{{ location.locationId }}</div>
-                <div class="col">{{ location.locationName }}</div>
-              </div>
-             </a>
+              <a v-on:click="goToPatients(location.locationId)" class="col"> {{ location.locationId + ' - ' + location.locationName }} </a>
             </li>
           </ul>          
         </div>
@@ -35,38 +30,43 @@ export default {
   props: ['auth'],
   data () {
     return {
-      locations: []
+      locations: [],
+      locationClicked: ''
     }
   },
   created(){
     const auth = new AuthService()
     const { admin } = auth
     //Get patients
+    //Depending if admin or nurse load/populate locations
     instance.get('/dataLocations', {
         params: {
             restrictedLocation: auth.admin
         }
     }).then((res)=>{
-        console.log(res.data)
+        // console.log(res.data)
         this.locations = res.data;
     }).catch((err)=>{
         console.error(err)
     })
   },
   methods: {
-    goToPatients:function() {
-      //Check if username&password matching is in DB
-      //If in DB: Check if admin or nurse - If not: display alert
-      //Depending if admin or nurse load/populate locations
-      //Go to locations.vue --> 
-      // this.$emit('changeComp', 'patients');
+    goToPatients(somelocation){
+      //get location clicked and pass it to App.vue (global variable)
+      this.locationClicked = somelocation;
+      // if (sessionStorage.getItem('locationClicked')){
+      //   this.$emit('callParent', sessionStorage.getItem('locationClicked'));
+      // }else{
+        sessionStorage.setItem('locationClicked', this.locationClicked);
+        this.$emit('callParent', this.locationClicked);
+      // }
+      //route to patients.vue
       this.$router.push('/patients')
     },
     logOut(){
       //Logout
       const auth = new AuthService()
       const { logout } = auth
-
       auth.logout()
     }
   }

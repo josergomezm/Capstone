@@ -29,19 +29,18 @@
         </div> 
 
         <ul id="patientsList">
-
           <li v-for="patient in patients" :key="patient.patientId" class="row">
             <a v-on:click="patientStatus(patient)" class="col-12 col-sm-10">
               <div class="row">
                 <div class="col">{{ patient.fullName }}</div>
                 <div class="col-3 d-none d-sm-block">{{ patient.patientId }}</div>
                 <div class="col-3 d-none d-sm-block">{{ patient.lastEntry }}</div>
-                <div class="col-2 d-none d-sm-block">{{ patient.NumOfWounds}}</div>
+                <div class="col-2 d-none d-sm-block">{{ patient.NumOfWounds }}</div>
               </div>
             </a>
-            <button type="button" class="btn btn-secondary col" v-on:click="updatePatient">Update</button>
+            <button type="button" class="btn btn-secondary col" v-on:click="updatePatient(patient)">Update</button>
           </li>
-
+          <li v-if="patients.length == 0" class="row text-muted">No records found...</li>
         </ul>
 
         <button type="button" class="mt-4 btn btn-danger col-sm-5" v-on:click="backToLocations">Locations</button>
@@ -62,16 +61,21 @@ export default {
       patients: []
     }
   },
-  created (){
-    //Get patients
-    instance.get('/dataAllPatients', {}).then((res)=>{
-        console.log(res.data)
-        this.patients = res.data;
-    }).catch((err)=>{
-        console.error(err)
-    })
+  created(){
+      //Get patients
+      instance.get('/dataPatientInLocations', {
+        params: {
+          locationId: sessionStorage.getItem('locationClicked')
+        }
+      }).then((res)=>{
+          // console.log(res.data);
+          this.patients = res.data;
+          // If patient list is empty, go back to location selection
+      }).catch((err)=>{
+          console.error(err)
+      })
   },
-  mounted (){
+  mounted(){
     //Search Pateints Function
     $("#patientSearchInput").on('keyup', function(){
     // Declare variables
@@ -80,12 +84,10 @@ export default {
     filter = input.value.toUpperCase();
     ul = document.getElementById("patients");
     li = ul.getElementsByTagName('li');
-
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) 
     {
       a = li[i];
-
       if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
         li[i].style.display = "";
       } else {
@@ -102,11 +104,11 @@ export default {
       // console.log(patient);
       this.$router.push(`/status/${patient.patientId}`)
     },
-    updatePatient:function() {
+    updatePatient:function(patient) {
       //Do something
       //Then take me to the next component
       // this.$emit('changeComp', 'updatePatient');
-      this.$router.push('/updatePatient')
+      this.$router.push(`/updatePatient/${patient.patientId}`)
     },
     addPatient:function() {
       //Do something

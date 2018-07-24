@@ -6,10 +6,7 @@ const instance = axios.create({
   });
 
 
-instance.get('/dataPatientStatus', {
-    params: {
-        patId: 1113
-    }
+instance.get('/python', {
 }).then((res)=>{
     console.log(res.data)
     this.patient = res.data;

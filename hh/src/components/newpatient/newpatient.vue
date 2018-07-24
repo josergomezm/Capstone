@@ -136,11 +136,7 @@
                 </select>
             </div>
 
-            </div>
-            <!-- ------------------------------------------------------ RIGHTSIDE -------------------------------------------------------------- -->
-            <div class="col-md-5 offset-md-1">    
-            
-            <!-- PATIENT InsuranceName INPUT -->
+             <!-- PATIENT InsuranceName INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">accessible_forward</i><label for="inputPatientInsuranceName" class="sr-only">Patient InsuranceName</label>
                 <select v-model="inputPatientInsuranceName" class="form-control col offset-1 h-auto" name="inputPatientInsuranceName" required>
@@ -155,12 +151,16 @@
                     <option value="Cigna Health Group">Cigna Health Group</option>
                     <option value="Highmark Group">Highmark Group</option>
                 </select>
-            </div>                        
+            </div>     
+
+            </div>
+            <!-- ------------------------------------------------------ RIGHTSIDE -------------------------------------------------------------- -->
+            <div class="col-md-5 offset-md-1">                       
 
             <!-- ULCER LENGTH INPUT -->
             <div class="row inputs">
                 <i class="material-icons col-1">straighten</i><label for="maxLength" class="sr-only">Max length of the ulcer (cm)</label>
-                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" max="999" required>
+                <input v-model="length" type="number" id="maxLength" class="form-control col offset-1" placeholder="Max length of the ulcer (cm)" min="1" max="999" required>
                 <span class="validity mr-3 mt-3"></span>
             </div>
 
@@ -169,7 +169,7 @@
 
             <div class="row inputs">
                 <i class="material-icons col-1">photo_camera</i><label for="ulcarImage" class="sr-only">Upload Picture</label>
-                <input type="file" name="ulcerImage" class="form-control col offset-1" accept="image/*" required>
+                <input type="file" name="ulcerImage" class="form-control col offset-1" v-on:change="convertToBase64" accept="image/*" required>
                 <span class="validity mr-3 mt-3"></span>
             </div>
 
@@ -186,123 +186,123 @@
                     <!-- FRONT VIEW -->
                     <div style="padding-top: 22px;" v-if="bodyView === 'FRONT'">
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Head (Front)" v-on:click="location = 'Head (Front)'"></div>
+                            <div class="bodyPart col-2" title="Head (Front)" v-on:click="ulcerLocation = 'Head (Front)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Shoulder (Front)" v-on:click="location = 'Right Shoulder (Front)'"></div>
-                            <div class="bodyPart col-2" title="Chest" v-on:click="location = 'Chest'"></div>
-                            <div class="bodyPart col-2" title="Left Shoulder (Front)" v-on:click="location = 'Left Shoulder (Front)'"></div>
+                            <div class="bodyPart col-2" title="Right Shoulder (Front)" v-on:click="ulcerLocation = 'Right Shoulder (Front)'"></div>
+                            <div class="bodyPart col-2" title="Chest" v-on:click="ulcerLocation = 'Chest'"></div>
+                            <div class="bodyPart col-2" title="Left Shoulder (Front)" v-on:click="ulcerLocation = 'Left Shoulder (Front)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Right Arm (Front)" v-on:click="location = 'Right Arm (Front)'"></div>
-                            <div class="bodyPart col-3" title="Abdomen" v-on:click="location = 'Abdomen'"></div>
-                            <div class="bodyPart col-1" title="Left Arm (Front)" v-on:click="location = 'Left Arm (Front)'"></div>
+                            <div class="bodyPart col-1" title="Right Arm (Front)" v-on:click="ulcerLocation = 'Right Arm (Front)'"></div>
+                            <div class="bodyPart col-3" title="Abdomen" v-on:click="ulcerLocation = 'Abdomen'"></div>
+                            <div class="bodyPart col-1" title="Left Arm (Front)" v-on:click="ulcerLocation = 'Left Arm (Front)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Right Hand (Front)" v-on:click="location = 'Right Hand (Front)'"></div>
-                            <div class="bodyPart col-3" title="Pelvis (Front)" v-on:click="location = 'Pelvis (Front)'"></div>
-                            <div class="bodyPart col-1" title="Left Hand (Front)" v-on:click="location = 'Left Hand (Front)'"></div>
+                            <div class="bodyPart col-1" title="Right Hand (Front)" v-on:click="ulcerLocation = 'Right Hand (Front)'"></div>
+                            <div class="bodyPart col-3" title="Pelvis (Front)" v-on:click="ulcerLocation = 'Pelvis (Front)'"></div>
+                            <div class="bodyPart col-1" title="Left Hand (Front)" v-on:click="ulcerLocation = 'Left Hand (Front)'"></div>
                         </div>     
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Leg (Front)" v-on:click="location = 'Right Leg (Front)'"></div>
-                            <div class="bodyPart col-2" title="Left Leg (Front)" v-on:click="location = 'Left Leg (Front)'"></div>
+                            <div class="bodyPart col-2" title="Right Leg (Front)" v-on:click="ulcerLocation = 'Right Leg (Front)'"></div>
+                            <div class="bodyPart col-2" title="Left Leg (Front)" v-on:click="ulcerLocation = 'Left Leg (Front)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Crus" v-on:click="location = 'Right Crus'"></div>
-                            <div class="bodyPart col-2" title="Left Crus" v-on:click="location = 'Left Crus'"></div>
+                            <div class="bodyPart col-2" title="Right Crus" v-on:click="ulcerLocation = 'Right Crus'"></div>
+                            <div class="bodyPart col-2" title="Left Crus" v-on:click="ulcerLocation = 'Left Crus'"></div>
                         </div>  
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Foot (Front)" v-on:click="location = 'Right Foot (Front)'"></div>
-                            <div class="bodyPart col-2" title="Left Foot (Front)" v-on:click="location = 'Left Foot (Front)'"></div>
+                            <div class="bodyPart col-2" title="Right Foot (Front)" v-on:click="ulcerLocation = 'Right Foot (Front)'"></div>
+                            <div class="bodyPart col-2" title="Left Foot (Front)" v-on:click="ulcerLocation = 'Left Foot (Front)'"></div>
                         </div>                      
                     </div>
                     <!-- BACK VIEW -->
                     <div style="padding-top: 22px;" v-if="bodyView === 'BACK'">
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Head (Back)" v-on:click="location = 'Head (Back)'"></div>
+                            <div class="bodyPart col-2" title="Head (Back)" v-on:click="ulcerLocation = 'Head (Back)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Shoulder (Back)" v-on:click="location = 'Left Shoulder (Back)'"></div>
-                            <div class="bodyPart col-2" title="Back" v-on:click="location = 'Back'"></div>
-                            <div class="bodyPart col-2" title="Right Shoulder (Back)" v-on:click="location = 'Right Shoulder (Back)'"></div>
+                            <div class="bodyPart col-2" title="Left Shoulder (Back)" v-on:click="ulcerLocation = 'Left Shoulder (Back)'"></div>
+                            <div class="bodyPart col-2" title="Back" v-on:click="ulcerLocation = 'Back'"></div>
+                            <div class="bodyPart col-2" title="Right Shoulder (Back)" v-on:click="ulcerLocation = 'Right Shoulder (Back)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Left Arm (Back)" v-on:click="location = 'Left Arm (Back)'"></div>
-                            <div class="bodyPart col-3" title="Lower Back" v-on:click="location = 'Lower Back'"></div>
-                            <div class="bodyPart col-1" title="Right Arm (Back)" v-on:click="location = 'Right Arm (Back)'"></div>
+                            <div class="bodyPart col-1" title="Left Arm (Back)" v-on:click="ulcerLocation = 'Left Arm (Back)'"></div>
+                            <div class="bodyPart col-3" title="Lower Back" v-on:click="ulcerLocation = 'Lower Back'"></div>
+                            <div class="bodyPart col-1" title="Right Arm (Back)" v-on:click="ulcerLocation = 'Right Arm (Back)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Left Hand (Back)" v-on:click="location = 'Left Hand (Back)'"></div>
-                            <div class="bodyPart col-3" title="Gluteus" v-on:click="location = 'Gluteus'"></div>
-                            <div class="bodyPart col-1" title="Right Hand (Back)" v-on:click="location = 'Right Hand (Back)'"></div>
+                            <div class="bodyPart col-1" title="Left Hand (Back)" v-on:click="ulcerLocation = 'Left Hand (Back)'"></div>
+                            <div class="bodyPart col-3" title="Gluteus" v-on:click="ulcerLocation = 'Gluteus'"></div>
+                            <div class="bodyPart col-1" title="Right Hand (Back)" v-on:click="ulcerLocation = 'Right Hand (Back)'"></div>
                         </div>     
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Leg (Back)" v-on:click="location = 'Left Leg (Back)'"></div>
-                            <div class="bodyPart col-2" title="Right Leg (Back)" v-on:click="location = 'Right Leg (Back)'"></div>
+                            <div class="bodyPart col-2" title="Left Leg (Back)" v-on:click="ulcerLocation = 'Left Leg (Back)'"></div>
+                            <div class="bodyPart col-2" title="Right Leg (Back)" v-on:click="ulcerLocation = 'Right Leg (Back)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Calf" v-on:click="location = 'Left Calf'"></div>
-                            <div class="bodyPart col-2" title="Right Calg" v-on:click="location = 'Right Calg'"></div>
+                            <div class="bodyPart col-2" title="Left Calf" v-on:click="ulcerLocation = 'Left Calf'"></div>
+                            <div class="bodyPart col-2" title="Right Calg" v-on:click="ulcerLocation = 'Right Calg'"></div>
                         </div>  
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Foot (Back)" v-on:click="location = 'Left Foot (Back)'"></div>
-                            <div class="bodyPart col-2" title="Right Foot (Back)" v-on:click="location = 'Right Foot (Back)'"></div>
+                            <div class="bodyPart col-2" title="Left Foot (Back)" v-on:click="ulcerLocation = 'Left Foot (Back)'"></div>
+                            <div class="bodyPart col-2" title="Right Foot (Back)" v-on:click="ulcerLocation = 'Right Foot (Back)'"></div>
                         </div>                      
                     </div>
                     <!-- RIGHT VIEWS -->
                     <div style="padding-top: 18px;" v-if="bodyView === 'RIGHT'">
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-3" title="Head (Right Side)" v-on:click="location = 'Head (Right Side)'"></div>
+                            <div class="bodyPart col-3" title="Head (Right Side)" v-on:click="ulcerLocation = 'Head (Right Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Shoulder (Side)" v-on:click="location = 'Right Shoulder (Side)'"></div>
+                            <div class="bodyPart col-2" title="Right Shoulder (Side)" v-on:click="ulcerLocation = 'Right Shoulder (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Right Arm (Side)" v-on:click="location = 'Right Arm (Side)'"></div>
+                            <div class="bodyPart col-1" title="Right Arm (Side)" v-on:click="ulcerLocation = 'Right Arm (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Pelvis (Right Side)" v-on:click="location = 'Pelvis (Right Side)'"></div>
+                            <div class="bodyPart col-1" title="Pelvis (Right Side)" v-on:click="ulcerLocation = 'Pelvis (Right Side)'"></div>
                         </div>     
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Leg (Side)" v-on:click="location = 'Right Leg (Side)'"></div>
+                            <div class="bodyPart col-2" title="Right Leg (Side)" v-on:click="ulcerLocation = 'Right Leg (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Fibula (Side)" v-on:click="location = 'Right Fibula (Side)'"></div>
+                            <div class="bodyPart col-2" title="Right Fibula (Side)" v-on:click="ulcerLocation = 'Right Fibula (Side)'"></div>
                         </div>  
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Right Foot (Side)" v-on:click="location = 'Right Foot (Side)'"></div>
+                            <div class="bodyPart col-2" title="Right Foot (Side)" v-on:click="ulcerLocation = 'Right Foot (Side)'"></div>
                         </div>                      
                     </div>
                     <!-- LEFT VIEW -->
                     <div style="padding-top: 18px;" v-if="bodyView === 'LEFT'">
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-3" title="Head (Left Side)" v-on:click="location = 'Head (Left Side)'"></div>
+                            <div class="bodyPart col-3" title="Head (Left Side)" v-on:click="ulcerLocation = 'Head (Left Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Shoulder (Side)" v-on:click="location = 'Left Shoulder (Side)'"></div>
+                            <div class="bodyPart col-2" title="Left Shoulder (Side)" v-on:click="ulcerLocation = 'Left Shoulder (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Left Arm (Side)" v-on:click="location = 'Left Arm (Side)'"></div>
+                            <div class="bodyPart col-1" title="Left Arm (Side)" v-on:click="ulcerLocation = 'Left Arm (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-1" title="Pelvis (Left Side)" v-on:click="location = 'Pelvis (Left Side)'"></div>
+                            <div class="bodyPart col-1" title="Pelvis (Left Side)" v-on:click="ulcerLocation = 'Pelvis (Left Side)'"></div>
                         </div>     
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Leg (Side)" v-on:click="location = 'Left Leg (Side)'"></div>
+                            <div class="bodyPart col-2" title="Left Leg (Side)" v-on:click="ulcerLocation = 'Left Leg (Side)'"></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Fibula (Side)" v-on:click="location = 'Left Fibula (Side)'"></div>
+                            <div class="bodyPart col-2" title="Left Fibula (Side)" v-on:click="ulcerLocation = 'Left Fibula (Side)'"></div>
                         </div>  
                         <div class="row justify-content-center">
-                            <div class="bodyPart col-2" title="Left Foot (Side)" v-on:click="location = 'Left Foot (Side)'"></div>
+                            <div class="bodyPart col-2" title="Left Foot (Side)" v-on:click="ulcerLocation = 'Left Foot (Side)'"></div>
                         </div>                     
                     </div>
                 </div>
             </div>
             <!-- ULCER LOCATION INPUT -->
-            <div v-if="location.length > 0" class="row inputs">
+            <div v-if="ulcerLocation.length > 0" class="row inputs">
                 <i class="material-icons col-1">accessibility</i><label for="ulcarLocation" class="sr-only">Ulcer Location</label>
-                <input name="ulcerLocation" v-bind:value="location" class="form-control col text-center" required readonly>
+                <input name="ulcerLocation" v-bind:value="ulcerLocation" class="form-control col text-center" required readonly>
                 <span class="validity mr-3 mt-3"></span>
             </div>
 
@@ -319,17 +319,19 @@
 import instance from '../../services/RESTful'
 
 export default {
-    name: 'newpatient',
+    name: 'newPatient',
     data:function() {
         return {
             // WOUND VARS
             length: '',
             bodyView: '',
-            location: '',
+            ulcerLocation: '',
             image: '',
+            imageBLOB: '',
             date: '',
             // PATIENT VARS
             patientID: '',
+            patientLocation: sessionStorage.getItem('locationClicked'),
             patientName: '',
             patientPhone: '',
             patientAddress: '',
@@ -341,65 +343,76 @@ export default {
             inputPatientInsuranceName: ''
         }
     },
+    created(){
+        File.prototype.convertToBase64 = function(callback){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                callback(e.target.result)
+            };
+            reader.onerror = function(e) {
+                callback(null, e);
+            };        
+            reader.readAsDataURL(this);
+        };
+    },
     mounted(){
         // Populate this.date!
         var today = new Date();
-        // var dd = today.getDate();
-        // var mm = today.getMonth()+1; //January is 0!
-        // var yyyy = today.getFullYear();
-        // if(dd<10) {
-        //     dd = '0'+dd
-        // }
-        // if(mm<10) {
-        //     mm = '0'+mm
-        // }
-        // this.date = mm + '/' + dd + '/' + yyyy;
-
         function twoDigits(d) {
             if(0 <= d && d < 10) return "0" + d.toString();
             if(-10 < d && d < 0) return "-0" + (-1*d).toString();
             return d.toString();
         }
-
         this.date = today.getUTCFullYear() + "-" + twoDigits(1 + today.getUTCMonth()) + "-" + twoDigits(today.getUTCDate()) + " " + twoDigits(today.getUTCHours()) + ":" + twoDigits(today.getUTCMinutes()) + ":" + twoDigits(today.getUTCSeconds());
 
     },
     methods: {
         addPatient:function(){
             // //Do stuff
-            if(this.location.length == 0){
+            if(this.ulcerLocation.length == 0){
                 alert("Please specify where the ulcer is located");
             }
-            else
-            instance.post('/data', {
-                patId: this.patientID,
-                patName: this.patientName,
-                patPhone: this.patientPhone,
-                patAddress: this.patientAddress,
-                patCity: this.patientCity,
-                patState: this.patientState,
-                patZip: this.patientZip,
-                patSSN: this.patientSSN,
-                patIType: this.inputPatientInsuranceType,
-                patIName: this.inputPatientInsuranceName,
-                woundDate: this.date,
-                imagePath: this.image,
-                woundSize: this.length,
-                woundView: this.bodyView,
-                woundLocation: this.location
-            }).then((res)=>{
-                console.log(res.data)
-                if(res.data.sqlMessage != undefined){
-                    alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
-                }
-                else {
-                    alert("Patient " + this.patientName + " has been added!");
-                    this.$router.push('/patients')
-                }
-            }).catch((err)=>{
-                console.error(err)
-                alert("An error has occured. The patient was not added");
-            })            
+            else{
+                instance.post('/data', {
+                    patId: this.patientID,
+                    patName: this.patientName,
+                    locationId: this.patientLocation,
+                    patPhone: this.patientPhone,
+                    patAddress: this.patientAddress,
+                    patCity: this.patientCity,
+                    patState: this.patientState,
+                    patZip: this.patientZip,
+                    patSSN: this.patientSSN,
+                    patIType: this.inputPatientInsuranceType,
+                    patIName: this.inputPatientInsuranceName,
+                    woundDate: this.date,
+                    imagePath: this.image,
+                    imageData: this.imageBLOB,
+                    woundSize: this.length,
+                    woundView: this.bodyView,
+                    woundLocation: this.ulcerLocation
+                }).then((res)=>{
+                    console.log(res.data)
+                    if(res.data.sqlMessage != undefined){
+                        alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
+                    }
+                    else {
+                        alert("Patient " + this.patientName + " has been added!");
+                        this.$router.push('/patients')
+                    }
+                }).catch((err)=>{
+                    console.error(err)
+                    alert("An error has occured. The patient was not added");
+                })
+            }           
+        },
+        convertToBase64:function(event){
+            const file = event.target.files[0]
+            const that = this
+            file.convertToBase64(function(base64){
+                that.imageBLOB = base64
+                console.log(that.imageBLOB)
+            })
         }
     }
 }

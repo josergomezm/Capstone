@@ -1,7 +1,7 @@
 <template id="app">
-  <keep-alive>
-    <router-view></router-view>
-  </keep-alive>
+  <!-- <keep-alive> -->
+    <router-view v-on:callParent="listenChild($event)"></router-view>
+  <!-- </keep-alive> -->
 </template>
 
 <script>
@@ -27,14 +27,13 @@ export default {
     status
   },
   data() {
-    
     authNotifier.on('authChange', authState => {
       this.authenticated = authState.authenticated
     })
     return {
       auth,
       authenticated,
-      component: 'loginPage',
+      locationClicked: '',
       user: '',
       patient: ''
     }
@@ -42,8 +41,9 @@ export default {
   methods: {
     login,
     logout,
-    goTo:function(nextComp){
-      this.component = nextComp;
+    listenChild(update){
+      this.locationClicked = update;
+      console.log(this.locationClicked);
     }
   }
 }
