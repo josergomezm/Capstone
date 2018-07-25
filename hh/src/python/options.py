@@ -1,5 +1,5 @@
 import argparse
-
+import os
 
 #PatchCNN options
 class PatchCNNOptions():
@@ -36,8 +36,8 @@ class TissueTypeOptions():
 
         self.parser.add_argument('--image_path', required=True, help="path to image to segment")
         self.parser.add_argument('--patch_size', type=int, default=5, help="size of patches to extract")
-        self.parser.add_argument('--segmenter_weights', default="./patch_weights/processed_weights.pth", help="path to ulcer segmentation model weights")
-        self.parser.add_argument('--classifier_weights', default="./patch_weights/multi_processed_weights.pth", help="path to tissue type classifier weights")
+        self.parser.add_argument('--segmenter_weights', default=os.path.abspath(os.getcwd()+'/src/python/patch_weights/processed_weights.pth'), help="path to ulcer segmentation model weights")
+        self.parser.add_argument('--classifier_weights', default=os.path.abspath(os.getcwd()+'/src/python/patch_weights/multi_processed_weights.pth'), help="path to tissue type classifier weights")
         self.parser.add_argument('--use_cuda', type=int, default=0, help="run on GPU")
         self.parser.add_argument('--device_id', type=int, default=0, help="GPU to run on")
 

@@ -1,5 +1,6 @@
 const path = require('path')
 const PythonShell = require('python-shell');
+
 const pythonPath = './src/python/get_tissue_type_percents.py' //'./src/python/hello.py';
 const pyshell = new PythonShell(pythonPath, {
     args: [`--image_path=${path.join(path.join(__dirname,'images'), 'img1.jpg')}`]
