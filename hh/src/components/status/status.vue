@@ -158,7 +158,7 @@
           </div>
           <!-- TISSUE PRESENCE (%) ------------- Epithelial: {{ patient.tissueA }}%, -->
           <div class="col-md-6 my-1">
-            <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Granulation: {{ patient.tissueB }}%,<br> Slough: {{ patient.tissueC }}%, Necrotic: {{ patient.tissueD }}%</span></h2>
+            <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Granulation: {{ aTissueB[aTissueB.length-1] }}%,<br> Slough: {{ aTissueC[aTissueC.length-1] }}%, Necrotic: {{ aTissueD[aTissueD.length-1] }}%</span></h2>
           </div>
         </div>
 
@@ -245,90 +245,93 @@ export default {
     })
   },
   mounted() {
-    // Highlight Ulcer Location
+    //Needed to set a small timeout to wait for the res.data
     setTimeout(() => {
+        // Highlight Ulcer Location
         var x = $("div[title='"+ this.patient.woundLocation +"']");
         x.css("border", "inset 2px #AD0000");
-    },100)
-    // --------------- MAKE CHART ---------------- //
-    var ctx = document.getElementById("ulcerChart").getContext('2d');
-    //Global Settings:
-    Chart.defaults.global.defaultFontFamily = 'Poppins';
-    Chart.defaults.global.defaultFontSize = 20;
-    Chart.defaults.global.defaultFontColor = '#111';
 
-    var ulcerChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: this.aDates,
-        datasets: 
-          [
-        //     {
-        //     label: 'Area',
-        //       data: this.aUlcerArea,
-        //       backgroundColor: [
-        //           'rgba(255, 159, 64, 0)'
-        //       ],
-        //       borderColor: [
-        //           'rgba(255, 159, 64, 1)'
-        //       ],
-        //       borderWidth: 4
-        //   },
-        //   {
-        //       label: 'Epithelial Tissue',
-        //       data: this.aTissueA,
-        //       backgroundColor: [
-        //           'rgba(255, 99, 132, 0)'
-        //       ],
-        //       borderColor: [
-        //           'rgba(255,99,132,1)'
-        //       ],
-        //       borderWidth: 4
-        //   },
-          {
-            label: 'Granulation Tissue',
-              data: this.aTissueB,
-              backgroundColor: [
-                  'rgba(54, 162, 235, 0)'
-              ],
-              borderColor: [
-                  'rgba(54, 162, 235, 1)'
-              ],
-              borderWidth: 4
-          },
-          {
-            label: 'Slough',
-              data: this.aTissueC,
-              backgroundColor: [
-                  'rgba(255, 206, 86, 0)'
-              ],
-              borderColor: [
-                  'rgba(255, 206, 86, 1)'
-              ],
-              borderWidth: 4
-          },
-          {
-            label: 'Necrotic Tissue',
-              data: this.aTissueD,
-              backgroundColor: [
-                  'rgba(75, 192, 192, 0)'
-              ],
-              borderColor: [
-                  'rgba(0, 0, 0, 1)'
-              ],
-              borderWidth: 4
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      } 
-    });
+        // --------------- MAKE CHART ---------------- //
+        var ctx = document.getElementById("ulcerChart").getContext('2d');
+        //Global Settings:
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 20;
+        Chart.defaults.global.defaultFontColor = '#111';
+
+        var ulcerChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: this.aDates,
+            datasets: 
+            [
+            //     {
+            //     label: 'Area',
+            //       data: this.aUlcerArea,
+            //       backgroundColor: [
+            //           'rgba(255, 159, 64, 0)'
+            //       ],
+            //       borderColor: [
+            //           'rgba(255, 159, 64, 1)'
+            //       ],
+            //       borderWidth: 4
+            //   },
+            //   {
+            //       label: 'Epithelial Tissue',
+            //       data: this.aTissueA,
+            //       backgroundColor: [
+            //           'rgba(255, 99, 132, 0)'
+            //       ],
+            //       borderColor: [
+            //           'rgba(255,99,132,1)'
+            //       ],
+            //       borderWidth: 4
+            //   },
+            {
+                label: 'Granulation Tissue',
+                data: this.aTissueB,
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 4
+            },
+            {
+                label: 'Slough',
+                data: this.aTissueC,
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0)'
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 4
+            },
+            {
+                label: 'Necrotic Tissue',
+                data: this.aTissueD,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0)'
+                ],
+                borderColor: [
+                    'rgba(0, 0, 0, 1)'
+                ],
+                borderWidth: 4
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        } 
+        });
+
+    },100)
   }
 }
 </script>

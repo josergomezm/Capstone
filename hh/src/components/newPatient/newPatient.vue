@@ -242,7 +242,7 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="bodyPart col-2" title="Left Calf" v-on:click="ulcerLocation = 'Left Calf'"></div>
-                            <div class="bodyPart col-2" title="Right Calg" v-on:click="ulcerLocation = 'Right Calg'"></div>
+                            <div class="bodyPart col-2" title="Right Calf" v-on:click="ulcerLocation = 'Right Calf'"></div>
                         </div>  
                         <div class="row justify-content-center">
                             <div class="bodyPart col-2" title="Left Foot (Back)" v-on:click="ulcerLocation = 'Left Foot (Back)'"></div>
@@ -367,7 +367,7 @@ export default {
     },
     methods: {
         addPatient:function(){
-            // //Do stuff
+            // Add the patient if ulcerlocation inputed
             if(this.ulcerLocation.length == 0){
                 alert("Please specify where the ulcer is located");
             }
@@ -391,7 +391,7 @@ export default {
                     woundView: this.bodyView,
                     woundLocation: this.ulcerLocation
                 }).then((res)=>{
-                    console.log(res.data)
+                    // console.log(res.data)
                     if(res.data.sqlMessage != undefined){
                         alert("ERROR: Patient not added. \n" + res.data.sqlMessage)
                     }
@@ -400,7 +400,7 @@ export default {
                         this.$router.push('/patients')
                     }
                 }).catch((err)=>{
-                    console.error(err)
+                    // console.error(err)
                     alert("An error has occured. The patient was not added");
                 })
             }           

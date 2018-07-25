@@ -33,6 +33,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+// ------------------------------------------------------------------------------------------- GET --------------------------------------------------------------------------------------------
+
 app.get('/', (req, res) => {
     res.send(`Hopefully Healing Says: Hello World!`)
 })
@@ -65,6 +67,7 @@ app.get('/python', (req, res) => {
     });
 })
 
+// ----------------------------------------- ML MODEL PREDICTIONS GETTER ---------------------------------------
 app.get('/pythonGetPredictions', (req, res) => {
     const PythonShell = require('python-shell');
     const pythonPath = './python/get_tissue_type_percents.py' //'./src/python/hello.py';
@@ -86,6 +89,7 @@ app.get('/pythonGetPredictions', (req, res) => {
         }
     });
 })
+// ml model predictions getter ned ------------------------------------------------------------------------
 
 
 app.get('/data', (req,res) => {
@@ -93,6 +97,7 @@ app.get('/data', (req,res) => {
       res.send(results)
     });
 })
+
 app.get('/dataPatientStatus', (req,res) => {
     var patId = req.query.patId;
     connection.query(`SELECT *
@@ -148,6 +153,7 @@ app.get('/dataLocations', (req,res) => {
     });
 })
 
+// ----------------------------------------- ALL PATIENTS GETTER ---------------------------------------
 app.get('/dataAllPatients', (req,res) => {
     // connection.query(`SELECT * FROM Patients p INNER JOIN Wounds w ON p.patientId = w.patientId`, function (error, results, fields) {
     connection.query(`SELECT *
@@ -174,7 +180,9 @@ app.get('/dataAllPatients', (req,res) => {
         res.send(results)
     });
 })
+// all patients getter end -----------------------------------------------------------------------------------------
 
+// ----------------------------------------- PATIENT FROM LOCATION GETTER ---------------------------------------
 app.get('/dataPatientInLocations', (req,res) => {
     connection.query(`SELECT *
     FROM Patients AS p
@@ -201,14 +209,19 @@ app.get('/dataPatientInLocations', (req,res) => {
         res.send(results)
     });
 })
+// patient from location getter end ----------------------------------------------------------------------
 
-
+// ----------------------------------------- LOCATIONS GETTER ---------------------------------------
 app.get('/dataAllLocations', (req,res) => {
     connection.query(`SELECT * FROM Locations`, function (error, results, fields) {
       res.send(results)
     });
 })
+// locations getter end -----------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------------------------- POST --------------------------------------------------------------------------------------------
+
+// ----------------------------------------- ADD NEW LOCATION ---------------------------------------
 app.post('/dataLocations', (req,res) => {
     var locationId = req.body.locationId;
     var locationName = req.body.locationName;
@@ -226,39 +239,65 @@ app.post('/dataLocations', (req,res) => {
         }
     });
 })
+// ADD NEW LOCATION end ----------------------------------------------------------------------------
 
+// ----------------------------------------- UPDATE PATIENT ---------------------------------------
 app.post('/updatePatientWound', (req,res) => {
     var patId = req.body.patId;
     var imagePath = req.body.imagePath || 'NULL';
-    var imageData = req.body.imageData || 'NULL';
+    var imageData = decodeBase64Image(req.body.imageData).data || 'NULL';
     var woundSize = req.body.woundSize || 0.0;
     var woundView = req.body.woundView || 'FRONT';
     var woundLocation = req.body.woundLocation || 'Head (Front)';
     var woundDate = req.body.woundDate;
-
-    const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
-        woundValues = {
-        patientId: patId,
-        imagePath: imagePath,
-        imageData: imageData,
-        woundSize_cm: woundSize,
-        woundView: woundView,
-        woundLocation: woundLocation,
-        woundDate: woundDate
-    }
-
-    connection.query(WoundQueryString, woundValues, function (error, results, fields) {
-        console.log(results)
+    // //Get image
+    var tmp_path = path.join(path.join(__dirname,'images'),'temp_image.png')
+    fs.writeFile(tmp_path, imageData, function(error){
         if(error){
             res.write(JSON.stringify(error))
             res.end()
         }else{
-            res.send('patient has been updated into the database!')
+            //Execute Python code here first
+            const PythonShell = require('python-shell');
+            const pythonPath = './python/get_tissue_type_percents.py' //'./src/python/hello.py';
+            const pyshell = new PythonShell(pythonPath, {
+                mode: 'json',
+                args: [`--image_path=${tmp_path}`]
+            });
+            
+            pyshell.on('message', function (message) {
+                console.log(message)
+                // message....
+                const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
+                    woundValues = {
+                    patientId: patId,
+                    imagePath: imagePath,
+                    imageData: imageData,
+                    woundSize_cm: woundSize,
+                    woundView: woundView,
+                    woundLocation: woundLocation,
+                    woundDate: woundDate,
+                    tissueB: message[1].Granulation,
+                    tissueC: message[1].Slough,
+                    tissueD: message[1].Necrotic
+                }
+                connection.query(WoundQueryString, woundValues, function (error, results, fields) {
+                    console.log(results)
+                    if(error){
+                        res.write(JSON.stringify(error))
+                        res.end()
+                    }else{
+                        res.send('patient has been updated into the database!')
+                    }
+                });
+                
+            })
         }
-    });
+    })
 })
+// updatepatient end ---------------------------------------------------------------------------------
 
-
+// ----------------------------------------- ADDING NEW PATIENT ---------------------------------------
 app.post('/data', (req, res) =>{
     var patId = req.body.patId;
     var patName = req.body.patName || 'NULL';
@@ -278,7 +317,7 @@ app.post('/data', (req, res) =>{
     var locationId = req.body.locationId || 1;
     var woundDate = req.body.woundDate;
 
-    // //Get image
+    // Get image
     var tmp_path = path.join(path.join(__dirname,'images'),'temp_image.png')
     fs.writeFile(tmp_path, imageData, function(error){
         if(error){
@@ -299,19 +338,19 @@ app.post('/data', (req, res) =>{
 
                 const PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}', ${locationId});`
                 const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
-                    woundValues = {
-                        patientId: patId,
-                        imagePath: imagePath,
-                        imageData: imageData,
-                        woundSize_cm: woundSize,
-                        woundView: woundView,
-                        woundLocation: woundLocation,
-                        woundDate: woundDate,
-                        tissueB: message[1].Granulation,
-                        tissueC: message[1].Slough,
-                        tissueD: message[1].Necrotic
-                    }
-            
+                woundValues = {
+                    patientId: patId,
+                    imagePath: imagePath,
+                    imageData: imageData,
+                    woundSize_cm: woundSize,
+                    woundView: woundView,
+                    woundLocation: woundLocation,
+                    woundDate: woundDate,
+                    tissueB: message[1].Granulation,
+                    tissueC: message[1].Slough,
+                    tissueD: message[1].Necrotic
+                }
+        
                 connection.query(PatientQueryString, function (error, results, fields) {
                     // console.log(results)
                     if(error){
@@ -327,8 +366,9 @@ app.post('/data', (req, res) =>{
                                 // console.log(woundValues.imageData.toString('base64'))
                                 // console.log(results)
 
-                                // Delete Image at some point
+                                // Delete Temp Image
                                 fs.unlink(tmp_path)
+                                // Send res
                                 res.send('patient has been added into the database!')
                             }
                         });  
@@ -345,17 +385,12 @@ app.post('/data', (req, res) =>{
             });
         }
     });
-
-    
-
-
 })
+// add new patient end ----------------------------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
-
-
-// DECODE BASE64 IMG
+// ------------------------- DECODE BASE64 IMG fuction ---------------------------------------
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
       response = {};

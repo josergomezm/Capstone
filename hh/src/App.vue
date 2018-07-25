@@ -43,7 +43,7 @@ export default {
     logout,
     listenChild(update){
       this.locationClicked = update;
-      console.log(this.locationClicked);
+      // console.log(this.locationClicked);
     }
   }
 }
