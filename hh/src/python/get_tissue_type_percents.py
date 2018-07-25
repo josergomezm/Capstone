@@ -2,7 +2,7 @@ import models, options
 from PIL import Image
 from torch import load, argmax
 from torchvision.transforms import ToTensor
-
+import json
 
 tissue_type_map = {0: "Necrotic", 1: "Granulation", 2: "Slough"}
 tissue_count_map = {"Healthy": 0, "Granulation": 0, "Slough": 0, "Necrotic": 0}
@@ -48,4 +48,4 @@ if __name__ == "__main__":
     counts_map = {k: (v / count) * 100 for k, v in tissue_count_map.items()}
     ulcer_map = {k: (v / ulcer_count) * 100 for k, v in ulcer_count_map.items()}
 
-    print([counts_map, ulcer_map])
+    print(json.dumps([counts_map, ulcer_map]))

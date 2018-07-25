@@ -1,10 +1,12 @@
 const express = require('express')
 const path = require('path')
+const os = require('os')
 const fs = require('fs')
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host     : 'localhost',
+  multipleStatements: true,
+  host     : os.hostname,
   user     : 'root',
   password : 'root',
   port     : '3306',
@@ -13,8 +15,8 @@ const connection = mysql.createConnection({
 const PORT = 5000
 
 const app = express()
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json({limit: '50mb'})); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); // support encoded bodies
 
 // Add headers
 app.use(function (req, res, next) {
@@ -53,8 +55,8 @@ app.get('/python', (req, res) => {
     
     // end the input stream and allow the process to exit
     pyshell.end(function (err,code,signal) {
-        if(error){
-            res.write(JSON.stringify(error))
+        if(err){
+            res.write(JSON.stringify(err))
             res.end()
         }
     //   console.log('The exit code was: ' + code);
@@ -103,7 +105,7 @@ app.get('/dataPatientStatus', (req,res) => {
         GROUP BY p.patientId
     ) as q1 ON q1.patientId = p.patientId
     INNER JOIN (
-        SELECT p.patientId, DATE_FORMAT(lastEntry,'%M %d, %Y') as lastEntry 
+        SELECT p.patientId, DATE_FORMAT(lastEntry,'%M %d, %Y') as lastEntry, woundId as lastImage
         FROM Patients p 
         INNER JOIN Wounds w ON p.patientId = w.patientId
         INNER JOIN (
@@ -114,9 +116,13 @@ app.get('/dataPatientStatus', (req,res) => {
         GROUP BY p.patientId
     ) as q2 ON q2.patientId = p.patientId
     WHERE p.patientId = ${patId}
-    GROUP BY p.patientId`, function (error, results, fields) {
+    GROUP BY p.patientId;
+    SELECT *
+    FROM Wounds
+    WHERE patientId = ${patId};
+    `, function (error, results, fields) {
         // var b64Data = decodeBase64Image(results[0].imageData)
-        results[0].imageData = results[0].imageData.toString('base64');
+        results[0][0].imageData = results[1][results[1].length - 1].imageData.toString('base64');
         res.send(results)
     });
 })
@@ -273,48 +279,75 @@ app.post('/data', (req, res) =>{
     var woundDate = req.body.woundDate;
 
     // //Get image
-    // var tmp_path = path.join(path.join(__dirname,'images'),'temp_image.png')
-    // fs.writeFile(tmp_path, imageData, function(error){
-    //     if(error){
-    //         res.write(JSON.stringify(error))
-    //         res.end()
-    //     }
-    // });
-
-    // //Execute Python code here first
-    
-
-    const PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}', ${locationId});`
-    const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
-        woundValues = {
-            patientId: patId,
-            imagePath: imagePath,
-            imageData: imageData,
-            woundSize_cm: woundSize,
-            woundView: woundView,
-            woundLocation: woundLocation,
-            woundDate: woundDate
-        }
-
-    connection.query(PatientQueryString, function (error, results, fields) {
-        console.log(results)
+    var tmp_path = path.join(path.join(__dirname,'images'),'temp_image.png')
+    fs.writeFile(tmp_path, imageData, function(error){
         if(error){
             res.write(JSON.stringify(error))
             res.end()
         }else{
-            // res.send('patient has been added into the database!')      
-            connection.query(WoundQueryString, woundValues, function (error, results, fields) {
-                if(error){
-                    res.write(JSON.stringify(error))
+            //Execute Python code here first
+            const PythonShell = require('python-shell');
+            const pythonPath = './python/get_tissue_type_percents.py' //'./src/python/hello.py';
+            const pyshell = new PythonShell(pythonPath, {
+                mode: 'json',
+                args: [`--image_path=${tmp_path}`]
+            });
+            
+            pyshell.on('message', function (message) {
+                console.log(message)
+                // message....
+
+                const PatientQueryString = `INSERT INTO HopefullyHealing.Patients VALUES (${patId},'${patName}','${patPhone}','${patAddress}','${patCity}','${patState}','${patZip}','${patSSN}','${patIType}','${patIName}', ${locationId});`
+                const WoundQueryString = "INSERT INTO HopefullyHealing.Wounds SET ?", 
+                    woundValues = {
+                        patientId: patId,
+                        imagePath: imagePath,
+                        imageData: imageData,
+                        woundSize_cm: woundSize,
+                        woundView: woundView,
+                        woundLocation: woundLocation,
+                        woundDate: woundDate,
+                        tissueB: message[1].Granulation,
+                        tissueC: message[1].Slough,
+                        tissueD: message[1].Necrotic
+                    }
+            
+                connection.query(PatientQueryString, function (error, results, fields) {
+                    // console.log(results)
+                    if(error){
+                        res.write(JSON.stringify(error))
+                        res.end()
+                    }else{
+                        // res.send('patient has been added into the database!')      
+                        connection.query(WoundQueryString, woundValues, function (error, results, fields) {
+                            if(error){
+                                res.write(JSON.stringify(error))
+                                res.end()
+                            }else{
+                                // console.log(woundValues.imageData.toString('base64'))
+                                // console.log(results)
+
+                                // Delete Image at some point
+                                fs.unlink(tmp_path)
+                                res.send('patient has been added into the database!')
+                            }
+                        });  
+                    }
+                });
+            });
+            
+            // end the input stream and allow the process to exit
+            pyshell.end(function (err,code,signal) {
+                if(err){
+                    res.write(JSON.stringify(err))
                     res.end()
-                }else{
-                    // console.log(woundValues.imageData.toString('base64'))
-                    console.log(results)
-                    res.send('patient has been added into the database!')
                 }
-            });  
+            });
         }
     });
+
+    
+
 
 })
 

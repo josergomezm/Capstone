@@ -154,11 +154,11 @@
           <!-- MAX-LENGTH & AREA -->
           <div class="col-md-6 my-1">
             <h2 class="h4">Length: <span>{{ patient.woundSize_cm }} cm</span></h2>
-            <h2 class="h4">Area: <span>{{ patient.woundArea }} cm<sup>2</sup></span></h2>
+            <!-- <h2 class="h4">Area: <span>{{ patient.woundArea }} cm<sup>2</sup></span></h2> -->
           </div>
-          <!-- TISSUE PRESENCE (%) -->
+          <!-- TISSUE PRESENCE (%) ------------- Epithelial: {{ patient.tissueA }}%, -->
           <div class="col-md-6 my-1">
-            <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Epithelial: {{ patient.tissueA }}%, Granulation: {{ patient.tissueB }}%,<br> Slough: {{ patient.tissueC }}%, Necrotic: {{ patient.tissueD }}%</span></h2>
+            <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Granulation: {{ patient.tissueB }}%,<br> Slough: {{ patient.tissueC }}%, Necrotic: {{ patient.tissueD }}%</span></h2>
           </div>
         </div>
 
@@ -201,12 +201,12 @@ export default {
     //   tissueC: '29',
     //   tissueD: '1',
       //Graph Variables
-      aDates: ['5/2/18','5/7/18','5/11/18','5/16/18','5/22/18','5/28/18'],
-      aUlcerArea: ['74','70','68','60','51','32'],
-      aTissueA: ['10','7','9','15','20','30'], 
-      aTissueB: ['30','22','34','28','20','10'],
-      aTissueC: ['12','14','16','9','8','7'],
-      aTissueD: ['4','3','2','1','.5','0'],
+      aDates: [],
+    //   aUlcerArea: ['74','70','68','60','51','32'],
+      aTissueA: [], 
+      aTissueB: [],
+      aTissueC: [],
+      aTissueD: [],
     }
   },
   methods: {
@@ -231,7 +231,15 @@ export default {
         }
     }).then((res)=>{
         console.log(res.data)
-        this.patient = res.data[0];
+        this.patient = res.data[0][0];
+        this.aDates = res.data[1].map(function(e){
+            var dateParts = e.woundDate.split('-')
+            var d = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+            return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+        })
+        this.aTissueB = res.data[1].map(function(e){return ''+e.tissueB})
+        this.aTissueC = res.data[1].map(function(e){return ''+e.tissueC})
+        this.aTissueD = res.data[1].map(function(e){return ''+e.tissueD})
     }).catch((err)=>{
         console.error(err)
     })
@@ -266,17 +274,17 @@ export default {
         //       ],
         //       borderWidth: 4
         //   },
-          {
-              label: 'Epithelial Tissue',
-              data: this.aTissueA,
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0)'
-              ],
-              borderColor: [
-                  'rgba(255,99,132,1)'
-              ],
-              borderWidth: 4
-          },
+        //   {
+        //       label: 'Epithelial Tissue',
+        //       data: this.aTissueA,
+        //       backgroundColor: [
+        //           'rgba(255, 99, 132, 0)'
+        //       ],
+        //       borderColor: [
+        //           'rgba(255,99,132,1)'
+        //       ],
+        //       borderWidth: 4
+        //   },
           {
             label: 'Granulation Tissue',
               data: this.aTissueB,

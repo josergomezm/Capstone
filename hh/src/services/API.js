@@ -1,8 +1,8 @@
 const axios = require('axios')
-
+const os = require('os')
 const instance = axios.create({
-    baseURL: 'http://localhost:5000/',
-    timeout: 1000
+    baseURL: `http://${os.hostname}:5000`,
+    timeout: 30000
   });
 
 
@@ -12,7 +12,7 @@ instance.get('/pythonGetPredictions', {
     }
 }).then((res)=>{
     console.log(res.data)
-    this.patient = res.data;
+    // this.patient = res.data;
 }).catch((err)=>{
     console.error(err)
 })
