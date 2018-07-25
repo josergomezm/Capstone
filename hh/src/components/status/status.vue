@@ -87,7 +87,7 @@
                   </div>
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Left Calf"></div>
-                      <div class="bodyPart col-2" title="Right Calg"></div>
+                      <div class="bodyPart col-2" title="Right Calf"></div>
                   </div>  
                   <div class="row justify-content-center">
                       <div class="bodyPart col-2" title="Left Foot (Back)"></div>

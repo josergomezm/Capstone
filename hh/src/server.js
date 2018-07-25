@@ -128,6 +128,9 @@ app.get('/dataPatientStatus', (req,res) => {
     `, function (error, results, fields) {
         // var b64Data = decodeBase64Image(results[0].imageData)
         results[0][0].imageData = results[1][results[1].length - 1].imageData.toString('base64');
+        results[0][0].woundLocation = results[1][results[1].length - 1].woundLocation;
+        results[0][0].woundSize_cm = results[1][results[1].length - 1].woundSize_cm;
+        results[0][0].woundView = results[1][results[1].length - 1].woundView;
         res.send(results)
     });
 })
