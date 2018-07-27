@@ -156,7 +156,7 @@
             <h2 class="h4">Length: <span>{{ patient.woundSize_cm }} cm</span></h2>
             <!-- <h2 class="h4">Area: <span>{{ patient.woundArea }} cm<sup>2</sup></span></h2> -->
           </div>
-          <!-- TISSUE PRESENCE (%) ------------- Epithelial: {{ patient.tissueA }}%, -->
+          <!-- TISSUE PRESENCE (%) ------------- Epithelial: {{ aTissueA[aTissueA.length-1] }}%, -->
           <div class="col-md-6 my-1">
             <h2 class="h4"><strong>Tissue Presence (%): </strong><br/> <span><br>Granulation: {{ aTissueB[aTissueB.length-1] }}%,<br> Slough: {{ aTissueC[aTissueC.length-1] }}%, Necrotic: {{ aTissueD[aTissueD.length-1] }}%</span></h2>
           </div>
@@ -213,13 +213,13 @@ export default {
     updatePatient:function(){
         // Do something
         //Then:
-        // this.$emit('changeComp', 'updatePatient');
+        // Redirect to update Patient
         this.$router.push(`/updatePatient/${this.$route.params.patientId}`)
     },
     backToPatients:function(){
         // Do something
         //Then:
-        // this.$emit('changeComp', 'patients');
+        // Redirect to patients list
         this.$router.push('/patients')
     }
   },
@@ -264,7 +264,9 @@ export default {
             labels: this.aDates,
             datasets: 
             [
-            //     {
+            //   Future implementation of area and healthy tissue
+            //   Needs to happen on the machine learning script. (Input the max lenght and have it compute the area of the wound right after it finishes the first chain)
+            //   {
             //     label: 'Area',
             //       data: this.aUlcerArea,
             //       backgroundColor: [
@@ -275,6 +277,7 @@ export default {
             //       ],
             //       borderWidth: 4
             //   },
+            //   (can be done by having the % of tissuaA translated into cm and use the change in area to keep track)
             //   {
             //       label: 'Epithelial Tissue',
             //       data: this.aTissueA,
