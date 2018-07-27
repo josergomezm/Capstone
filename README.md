@@ -20,10 +20,11 @@ This is a WebApp used by clinicians to provide better care - evaluate whether a 
 ### Setting Up Database
 1. Install MySQL 5.7 (Updated versions are not supported with NodeJS integration at the moment)
 2. You **MUST** set your MySQL's credentials to be the following:
-   - Username : root
-   - Password : root
-   - Host : localhost
-   - Port : 3306
+
+   - **Username** : root
+   - **Password** : root
+   - **Host** : localhost
+   - **Port** : 3306
 
 
    > Failure to set up these credentials will result in a failure. Alternatively, you can modify the **server.js** file in the src folder to update your MySQL credentials.
