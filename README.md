@@ -27,6 +27,7 @@ This is a WebApp used by clinicians to provide better care - evaluate whether a 
    - **Port** : 3306
 
 
+
    > Failure to set up these credentials will result in a failure. Alternatively, you can modify the **server.js** file in the src folder to update your MySQL credentials.
 
 3. Run the **HH.sql** file in MySQL located in the path below. This file will generate the HopefullyHealing Database, create the necessary tables, and populate some dummy data.
